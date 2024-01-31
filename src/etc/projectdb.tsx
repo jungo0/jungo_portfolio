@@ -1,0 +1,41 @@
+export const ProjectInfo = [
+  {
+    id: 1,
+    title: "todoList",
+    time: "2023.05~2022.06",
+    skill: ["React", "JavaScript"],
+    gitLink: "/ToyApp/",
+    imgUrl: "",
+  },
+  {
+    id: 2,
+    title: "Coin Traker",
+    time: "",
+    skill: ["React", "TypeScript", "Recoil"],
+    gitLink: "",
+    imgUrl: "",
+  },
+  {
+    id: 3,
+    title: "",
+    time: "",
+    skill: ["HTML", "CSS", "JavaScript"],
+    gitLink: "",
+    imgUrl: "",
+  },
+  {
+    id: 4,
+    title: "",
+    time: "",
+    skill: [
+      "React",
+      "TypeScript",
+      "Swiper",
+      "styled-components",
+      "Recoil",
+      "react-router-dom",
+    ],
+    gitLink: "",
+    imgUrl: "",
+  },
+];
