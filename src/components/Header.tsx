@@ -61,9 +61,10 @@ const Wrapper = styled.nav`
   margin: 0 auto;
   height: 70px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 93%;
 `;
+
 function Header() {
   const location = useLocation().pathname;
   return (
