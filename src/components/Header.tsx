@@ -122,9 +122,9 @@ function Header() {
       </Menu>
       <Buttons>
         {/* Add your three buttons here */}
-        <button>Button 1</button>
-        <button>Button 2</button>
-        <button>Button 3</button>
+        <button>Git</button>
+        <button>Mail</button>
+        <button>Blog</button>
       </Buttons>
     </HeaderNavi>
   );
