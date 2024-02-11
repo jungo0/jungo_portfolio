@@ -72,12 +72,11 @@ const Menu = styled.div`
 const Buttons = styled.div`
   display: flex;
 
-  /* Style for each button */
   button {
-    margin-left: 10px; /* Adjust margin as needed */
+    margin-left: 10px;
     background-color: #333;
     color: #fff;
-    padding: 5px 10px; /* Adjust padding as needed */
+    padding: 5px 10px;
     border: none;
     cursor: pointer;
   }

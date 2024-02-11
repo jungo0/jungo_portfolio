@@ -25,11 +25,6 @@ function Footer() {
     <FooterBar>
       <Wrapper>
         <div className="copyright">Copyright 2024 jungo</div>
-        <div className="menu">
-          <a href="https://github.com/jungo0">
-            <FaGithubSquare />
-          </a>
-        </div>
       </Wrapper>
     </FooterBar>
   );
