@@ -1,10 +1,11 @@
-import { Link, useLocation } from "react-router-dom";
+import React from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const HeaderNavi = styled.header`
   position: fixed;
   width: 100%;
-  top: 20px;
+  top: 0;
   background-color: #fff;
   left: 0;
   right: 0;
@@ -12,13 +13,14 @@ const HeaderNavi = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 25px 40px;
 `;
 
 const Logo = styled.div`
   font-size: 30px;
   font-weight: bold;
 `;
+
 const Menu = styled.div`
   ul {
     display: flex;
@@ -57,6 +59,15 @@ const Buttons = styled.div`
 
 function Header() {
   const location = useLocation().pathname;
+  const navigate = useNavigate();
+
+  const handleMenuClick = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <HeaderNavi>
       <Logo>
@@ -67,9 +78,8 @@ function Header() {
           <li>
             <Link
               to="/"
-              className={
-                location === "home" || location === "/" ? "active" : ""
-              }
+              onClick={() => handleMenuClick("home-section")}
+              className={location === "/" ? "active" : ""}
             >
               Home
             </Link>
@@ -77,6 +87,7 @@ function Header() {
           <li>
             <Link
               to="/Skills"
+              onClick={() => handleMenuClick("skills-section")}
               className={location === "/Skills" ? "active" : ""}
             >
               Skills
@@ -85,20 +96,27 @@ function Header() {
           <li>
             <Link
               to="/Project"
+              onClick={() => handleMenuClick("projects-section")}
               className={location === "/Project" ? "active" : ""}
             >
               Projects
             </Link>
           </li>
           <li>
-            <Link to="/etc">Contact</Link>
+            <Link
+              to="/etc"
+              onClick={() => handleMenuClick("contact-section")}
+              className={location === "/etc" ? "active" : ""}
+            >
+              Contact
+            </Link>
           </li>
         </ul>
       </Menu>
       <Buttons>
-        <button>Git</button>
-        <button>Mail</button>
-        <button>Blog</button>
+        <button onClick={() => navigate("/git")}>Git</button>
+        <button onClick={() => navigate("/mail")}>Mail</button>
+        <button onClick={() => navigate("/blog")}>Blog</button>
       </Buttons>
     </HeaderNavi>
   );

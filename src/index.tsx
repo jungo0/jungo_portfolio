@@ -4,7 +4,9 @@ import { RecoilRoot } from "recoil";
 import App from "./App";
 import { createGlobalStyle } from "styled-components";
 import { BrowserRouter } from "react-router-dom";
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -32,7 +34,6 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-  padding:0 70px;
 	background-color: #fff;
 	font-family: 'Open Sans', sans-serif;
 }
@@ -63,10 +64,8 @@ a {
 root.render(
   <React.StrictMode>
     <RecoilRoot>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <GlobalStyle />
-        <App />
-      </BrowserRouter>
+      <GlobalStyle />
+      <App />
     </RecoilRoot>
   </React.StrictMode>
 );
