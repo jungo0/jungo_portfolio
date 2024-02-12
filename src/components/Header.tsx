@@ -19,7 +19,6 @@ const Logo = styled.div`
   font-size: 30px;
   font-weight: bold;
 `;
-
 const Menu = styled.div`
   ul {
     display: flex;
@@ -34,36 +33,10 @@ const Menu = styled.div`
       display: inline-block;
       color: #333;
       font-weight: 500;
-      transition: all 0.3s ease;
       position: relative;
 
-      &::after {
-        width: 0;
-        left: 0;
-        position: absolute;
-        height: 100%;
-        color: #fff;
-        content: "";
-        z-index: -1;
-        transition: all 0.6s ease 0.3s;
-        background-color: #333;
-      }
-
       &:hover {
-        color: #fff;
-      }
-
-      &:hover::after {
-        width: 100%;
-      }
-
-      &.active {
-        left: 0;
-        height: 0;
-        background-color: #333;
-        height: 100%;
-        z-index: 100;
-        color: #fff;
+        color: blue;
       }
     }
   }
@@ -98,29 +71,31 @@ function Header() {
                 location === "home" || location === "/" ? "active" : ""
               }
             >
-              홈
+              Home
             </Link>
           </li>
           <li>
-            <Link to="/About" className={location === "/About" ? "active" : ""}>
-              소개
+            <Link
+              to="/Skills"
+              className={location === "/Skills" ? "active" : ""}
+            >
+              Skills
             </Link>
-          </li>
-          <li>
-            <Link to="/etc">기술스택</Link>
           </li>
           <li>
             <Link
               to="/Project"
               className={location === "/Project" ? "active" : ""}
             >
-              프로젝트
+              Projects
             </Link>
+          </li>
+          <li>
+            <Link to="/etc">Contact</Link>
           </li>
         </ul>
       </Menu>
       <Buttons>
-        {/* Add your three buttons here */}
         <button>Git</button>
         <button>Mail</button>
         <button>Blog</button>
