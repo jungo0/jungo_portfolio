@@ -275,7 +275,7 @@ const ArrowIcon = styled(FaArrowCircleRight)`
 function Header() {
   const location = useLocation().pathname;
   const navigate = useNavigate();
-  const [isScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1020);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -290,6 +290,11 @@ function Header() {
     setIsMobileMenuOpen(false);
   };
 
+  const handleScroll = () => {
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    setIsScrolled(scrollY > 0);
+  };
+
   const handleHamburgerClick = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };
@@ -298,39 +303,44 @@ function Header() {
     const newIsMobile = window.innerWidth <= 1020;
     setIsMobile(newIsMobile);
 
-    if (newIsMobile) {
-      if (isMobileMenuOpen) {
-        document.body.style.overflow = "hidden";
-      }
+    if (newIsMobile && isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
     } else {
-      if (isMobileMenuOpen) {
-        setIsMobileMenuOpen(false);
-        document.body.style.overflow = "visible";
-      }
+      document.body.style.overflow = "visible";
+    }
+
+    if (!newIsMobile && isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
     }
   }, [isMobileMenuOpen, setIsMobileMenuOpen]);
 
   useEffect(() => {
-    const handleWindowResize = () => {
-      handleResize();
-    };
-
-    window.addEventListener("resize", handleWindowResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleWindowResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, [handleResize]);
 
   useEffect(() => {
-    handleResize();
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "visible";
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      if (isMobileMenuOpen) {
-        document.body.style.overflow = "visible";
-      }
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
     };
   }, [isMobileMenuOpen, handleResize]);
+
+  useEffect(() => {
+    handleResize();
+  }, []);
 
   return (
     <>
