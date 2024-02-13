@@ -2,23 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 import { FaSquareGithub } from "react-icons/fa6";
-import { IoIosMail } from "react-icons/io";
 import { SiVelog } from "react-icons/si";
 import { RxHamburgerMenu } from "react-icons/rx";
-
+import { FaArrowCircleRight } from "react-icons/fa";
 interface HeaderProps {
   isScrolled: boolean;
   isMobileMenuOpen: boolean;
 }
-
-const fadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-`;
 
 const fadeIn = keyframes`
   from {
@@ -181,17 +171,17 @@ const Button = styled.button`
   }
 `;
 
-const HamburgerMenu = styled(RxHamburgerMenu)`
+const HamburgerMenu = styled(RxHamburgerMenu)<{ isScrolled: boolean }>`
   display: none;
 
   @media (max-width: 1020px) {
     display: block;
-    font-size: 32px;
+    font-size: 30px;
     cursor: pointer;
     text-align: center;
     margin-right: 30px;
-    margin-bottom: 26px;
-    margin-top: 26px;
+    margin-bottom: ${(props) => (props.isScrolled ? "8px" : "26px")};
+    margin-top: ${(props) => (props.isScrolled ? "24px" : "26px")};
     color: #3e3e3e;
     font-weight: 200;
     opacity: 1;
@@ -209,9 +199,9 @@ const HamburgerMenu = styled(RxHamburgerMenu)`
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 20px;
-  right: 20px;
-  font-size: 24px;
+  top: 15px;
+  right: 36px;
+  font-size: 50px;
   color: #fff;
   background-color: transparent;
   border: none;
@@ -226,25 +216,61 @@ const CloseButton = styled.button`
 const MobileMenu = styled.div<{ isOpen: boolean }>`
   display: ${(props) => (props.isOpen ? "flex" : "none")};
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   position: fixed;
-  top: ${(props) => (props.isOpen ? "80px" : "0")};
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(60, 103, 222, 0.9);
+  background-color: #2454d9;
   z-index: 10;
+  animation: ${fadeIn} 0.5s ease;
 `;
 
 const MobileMenuItem = styled(Link)`
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-top: 50px;
   text-decoration: none;
   color: #fff;
+  position: relative;
+  padding: 0 5%;
+  width: 90%;
+  padding-top: 60px;
+  box-sizing: border-box;
+
+  &:not(:last-child)::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background-color: rgb(255, 255, 255, 0.5);
+    position: absolute;
+    bottom: 42px;
+  }
 
   &:hover {
     color: #eee;
   }
+`;
+
+const RedButton = styled.button`
+  background-color: #ea3800;
+  color: #fff;
+  font-size: 16px;
+  width: 150px;
+  height: 50px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 51px;
+  cursor: pointer;
+  margin-top: 50px;
+  margin-left: 40%;
+
+  &:hover {
+    background-color: #cc0000;
+  }
+`;
+const ArrowIcon = styled(FaArrowCircleRight)`
+  margin-left: 5px;
 `;
 function Header() {
   const location = useLocation().pathname;
@@ -259,7 +285,9 @@ function Header() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
-
+  const handleMobileMenuItemClick = () => {
+    setIsMobileMenuOpen(false);
+  };
   const handleScroll = () => {
     const scrollY = window.scrollY || document.documentElement.scrollTop;
     setIsScrolled(scrollY > 0);
@@ -361,7 +389,10 @@ function Header() {
               </ButtonsContainer>
             </Buttons>
           </ButtonsWrapper>
-          <HamburgerMenu onClick={handleHamburgerClick} />
+          <HamburgerMenu
+            onClick={handleHamburgerClick}
+            isScrolled={isScrolled}
+          />
         </HeaderNavi>
       )}
       {isMobileMenuOpen && (
@@ -369,31 +400,47 @@ function Header() {
           <CloseButton onClick={handleHamburgerClick}>&times;</CloseButton>
           <MobileMenuItem
             to="/"
-            onClick={() => handleMenuClick("home-section")}
+            onClick={() => {
+              handleMenuClick("home-section");
+              handleMobileMenuItemClick();
+            }}
           >
             Home
           </MobileMenuItem>
           <MobileMenuItem
             to="/Skills"
-            onClick={() => handleMenuClick("skills-section")}
+            onClick={() => {
+              handleMenuClick("skills-section");
+              handleMobileMenuItemClick();
+            }}
           >
             Skills
           </MobileMenuItem>
           <MobileMenuItem
             to="/Project"
-            onClick={() => handleMenuClick("projects-section")}
+            onClick={() => {
+              handleMenuClick("projects-section");
+              handleMobileMenuItemClick();
+            }}
           >
             Projects
           </MobileMenuItem>
           <MobileMenuItem
             to="/etc"
-            onClick={() => handleMenuClick("contact-section")}
+            onClick={() => {
+              handleMenuClick("contact-section");
+              handleMobileMenuItemClick();
+            }}
           >
             Contact
           </MobileMenuItem>
+          <RedButton>
+            포트폴리오 보기 <ArrowIcon />
+          </RedButton>
         </MobileMenu>
       )}
     </>
   );
 }
+
 export default Header;

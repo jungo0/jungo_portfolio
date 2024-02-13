@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { FaGithubSquare } from "react-icons/fa";
 
 interface FooterProps {
   visible: boolean;
@@ -11,11 +10,11 @@ const FooterBar = styled.footer<FooterProps>`
   bottom: 0;
   left: 0;
   right: 0;
-  height: 70px;
-  background-color: #fff;
+  height: 50px;
+  background-color: rgb(255, 255, 255, 60%);
   z-index: 10;
-  line-height: 70px;
-  padding: 0 70px;
+  line-height: 45px;
+  padding: 0 50px;
   transform: translateY(${(props) => (props.visible ? "0" : "100%")});
   transition: transform 0.3s ease-in-out;
 `;
