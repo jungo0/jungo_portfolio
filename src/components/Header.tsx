@@ -298,17 +298,31 @@ function Header() {
   };
 
   const handleResize = () => {
-    setIsMobile(window.innerWidth <= 1020);
-  };
+    const newIsMobile = window.innerWidth <= 1020;
+    setIsMobile(newIsMobile);
 
+    if (newIsMobile && isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "visible";
+    }
+
+    if (isMobileMenuOpen && window.innerWidth > 1020) {
+      setIsMobileMenuOpen(false);
+    } else if (newIsMobile && !isMobileMenuOpen) {
+      setIsMobileMenuOpen(true);
+    }
+  };
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleResize);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
