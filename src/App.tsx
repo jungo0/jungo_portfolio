@@ -9,6 +9,7 @@ import Display from "./Layout";
 import Skills from "./pages/Skills";
 import Project from "./pages/Project";
 import { BrowserRouter as Router } from "react-router-dom";
+
 function App() {
   return (
     <Router>
@@ -18,7 +19,7 @@ function App() {
       <Project />
       <Contact />
       <AppRouter />
-      <Footer />
+      <Footer isMobileMenuOpen={false} />
     </Router>
   );
 }

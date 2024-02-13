@@ -32,7 +32,8 @@ const fadeIn = keyframes`
 const HeaderNavi = styled.header<HeaderProps>`
   position: fixed;
   width: 100%;
-  top: -1%;
+  top: -2%;
+  margin-top: -9px;
   background-color: white;
   box-shadow: ${(props) =>
     props.isScrolled ? "0 2px  rgba(0, 0, 0, 1)" : "none"};
@@ -47,10 +48,10 @@ const HeaderNavi = styled.header<HeaderProps>`
   padding: ${(props) =>
     props.isScrolled
       ? props.isMobileMenuOpen
-        ? "14px 0px 0px 0px"
-        : "14px 0px 0px 0px"
-      : "17px 0px 0px 0px"};
-  height: ${(props) => (props.isMobileMenuOpen ? "80px" : "auto")};
+        ? "11px 0px 0px 0px"
+        : "11px 0px 0px 0px"
+      : "24px 0px 0px 0px"};
+  height: ${(props) => (props.isMobileMenuOpen ? "100vh" : "auto")};
   transition: background-color 0.2s, box-shadow 0.2s, padding 0.2s, height 0.3s;
 `;
 
@@ -58,11 +59,13 @@ const Logo = styled.div<{ isScrolled: boolean }>`
   font-size: 35px;
   font-weight: bold;
   margin-left: 60px;
-  transition: font-size 0.2s;
+  transition: font-size 0.3s;
+  margin-top: -6px;
 
   ${(props) =>
     props.isScrolled &&
     css`
+      margin-top: 10px;
       font-size: 30px;
     `}
 `;
@@ -72,8 +75,7 @@ const Menu = styled.div<{
   isMobileMenuOpen: boolean;
 }>`
   display: ${(props) => (props.isMobile ? "none" : "flex")};
-  position: fixed;
-  top: ${(props) => (props.isMobileMenuOpen ? "80px" : "2.5%")};
+  position: sticky;
   left: 32%;
   opacity: ${(props) => (props.isMobileMenuOpen ? 0 : 1)};
   transition: opacity 0.3s ease;
@@ -100,13 +102,15 @@ const Menu = styled.div<{
 
   li {
     margin-left: 30px;
-    line-height: 38px;
+    line-height: -68px;
+    margin-bottom: ${(props) => (props.isScrolled ? "-14px" : "0")};
+    transition: margin-bottom 0.3s ease;
 
     & > a {
       padding: 0 20px;
       display: inline-block;
       color: #333;
-      font-weight: 500;
+      font-weight: 550;
       position: relative;
 
       &:hover {
@@ -115,44 +119,62 @@ const Menu = styled.div<{
     }
   }
 `;
-
 const ButtonsWrapper = styled.div<{ isScrolled: boolean; isMobile: boolean }>`
   display: ${(props) => (props.isMobile ? "none" : "flex")};
+  flex-direction: column;
   align-items: flex-end;
-  border-width: 0px 0px ${(props) => (props.isScrolled ? "0px 2px" : "2px 2px")};
-  border-style: solid;
+  border-width: 0px 0px ${(props) => (props.isScrolled ? "1px 2px" : "2px 2px")};
+  border-style: ${(props) => (props.isScrolled ? "hidden" : "solid")};
   border-color: #1c1917;
-  border-radius: 5px;
+  border-radius: ${(props) => (props.isScrolled ? "0" : "0 0 0 20px")};
+  overflow: hidden;
   padding: ${(props) =>
-    props.isScrolled ? "15px 10px 34px 20px" : "15px 10px 34px 20px"};
+    props.isScrolled ? "5px 16px 14px 20px" : "5px 15px 14px 20px"};
   position: relative;
   animation: ${fadeIn} 0.3s ease;
+  top: ${(props) => (props.isScrolled ? "5px" : "0")};
+  transition: top 0.3s ease, height 0.3s ease;
 
   @media (max-width: 1020px) {
     opacity: ${(props) => (props.isScrolled ? 0 : 1)};
   }
 `;
-
 const Buttons = styled.div<{ isScrolled: boolean }>`
   display: flex;
+  flex-direction: column;
   align-items: flex-end;
-  margin-top: ${(props) => (props.isScrolled ? "8px" : "13px")};
+  margin-top: ${(props) => (props.isScrolled ? "-9px" : "15px")};
   transition: margin-top 0.3s ease;
+
+  &::before {
+    content: "About Me";
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: #3e3e3e;
+    font-weight: bold;
+    opacity: ${(props) => (props.isScrolled ? 0 : 1)};
+    transition: opacity 0.3s ease;
+  }
+`;
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const Button = styled.button`
-  color: #333;
-  background-color: #87ceeb;
+  color: RGB(41, 41, 41);
+  background-color: #d4d8d9;
   cursor: pointer;
   border: 0px solid #fff;
   border-radius: 5px;
   padding: 5px 7px;
-  margin-right: 10px;
+  margin-right: 7px;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s,
     transform 0.3s;
 
   &:hover {
-    background-color: #4682b4;
+    background-color: rgba(60, 103, 222, 0.9);
     color: #fff;
     border-color: #fff;
     transform: translateY(-1px);
@@ -184,6 +206,7 @@ const HamburgerMenu = styled(RxHamburgerMenu)`
     }
   }
 `;
+
 const CloseButton = styled.button`
   position: absolute;
   top: 20px;
@@ -209,7 +232,7 @@ const MobileMenu = styled.div<{ isOpen: boolean }>`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(60, 103, 222, 0.9); // 투명한 파란색 배경
+  background-color: rgba(60, 103, 222, 0.9);
   z-index: 10;
 `;
 
@@ -223,7 +246,6 @@ const MobileMenuItem = styled(Link)`
     color: #eee;
   }
 `;
-
 function Header() {
   const location = useLocation().pathname;
   const navigate = useNavigate();
@@ -259,95 +281,119 @@ function Header() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "visible";
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isMobileMenuOpen]);
 
   return (
-    <HeaderNavi isScrolled={isScrolled} isMobileMenuOpen={isMobileMenuOpen}>
-      <Logo isScrolled={isScrolled}>
-        <Link to="/">Jungo's</Link>
-      </Logo>
-      <Menu
-        isScrolled={isScrolled}
-        isMobile={isMobile}
-        isMobileMenuOpen={isMobileMenuOpen}
-      >
-        <ul>
-          <li>
-            <Link
-              to="/"
-              onClick={() => handleMenuClick("home-section")}
-              className={location === "/" ? "active" : ""}
-            >
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/Skills"
-              onClick={() => handleMenuClick("skills-section")}
-              className={location === "/Skills" ? "active" : ""}
-            >
-              Skills
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/Project"
-              onClick={() => handleMenuClick("projects-section")}
-              className={location === "/Project" ? "active" : ""}
-            >
-              Projects
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/etc"
-              onClick={() => handleMenuClick("contact-section")}
-              className={location === "/etc" ? "active" : ""}
-            >
-              Contact
-            </Link>
-          </li>
-        </ul>
-      </Menu>
-      <ButtonsWrapper isScrolled={isScrolled} isMobile={isMobile}>
-        <Buttons isScrolled={isScrolled}>
-          <Button onClick={() => navigate("/git")}>
-            <FaSquareGithub />
-          </Button>
-          <Button onClick={() => navigate("/mail")}>
-            <IoIosMail />
-          </Button>
-          <Button onClick={() => navigate("/blog")}>
-            <SiVelog />
-          </Button>
-        </Buttons>
-      </ButtonsWrapper>
-      <HamburgerMenu onClick={handleHamburgerClick} />
-      <MobileMenu isOpen={isMobileMenuOpen}>
-        <MobileMenuItem to="/" onClick={() => handleMenuClick("home-section")}>
-          Home
-        </MobileMenuItem>
-        <MobileMenuItem
-          to="/Skills"
-          onClick={() => handleMenuClick("skills-section")}
-        >
-          Skills
-        </MobileMenuItem>
-        <MobileMenuItem
-          to="/Project"
-          onClick={() => handleMenuClick("projects-section")}
-        >
-          Projects
-        </MobileMenuItem>
-        <MobileMenuItem
-          to="/etc"
-          onClick={() => handleMenuClick("contact-section")}
-        >
-          Contact
-        </MobileMenuItem>
-      </MobileMenu>
-    </HeaderNavi>
+    <>
+      {!isMobileMenuOpen && (
+        <HeaderNavi isScrolled={isScrolled} isMobileMenuOpen={isMobileMenuOpen}>
+          <Logo isScrolled={isScrolled}>
+            <Link to="/">Jungo's</Link>
+          </Logo>
+          <Menu
+            isScrolled={isScrolled}
+            isMobile={isMobile}
+            isMobileMenuOpen={isMobileMenuOpen}
+          >
+            <ul>
+              <li>
+                <Link
+                  to="/"
+                  onClick={() => handleMenuClick("home-section")}
+                  className={location === "/" ? "active" : ""}
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/Skills"
+                  onClick={() => handleMenuClick("skills-section")}
+                  className={location === "/Skills" ? "active" : ""}
+                >
+                  Skills
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/Project"
+                  onClick={() => handleMenuClick("projects-section")}
+                  className={location === "/Project" ? "active" : ""}
+                >
+                  Projects
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/etc"
+                  onClick={() => handleMenuClick("contact-section")}
+                  className={location === "/etc" ? "active" : ""}
+                >
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </Menu>
+          <ButtonsWrapper isScrolled={isScrolled} isMobile={isMobile}>
+            <Buttons isScrolled={isScrolled}>
+              <ButtonsContainer>
+                <Button onClick={() => navigate("/git")}>
+                  <FaSquareGithub />
+                </Button>
+
+                <Button onClick={() => navigate("/blog")}>
+                  <SiVelog />
+                </Button>
+              </ButtonsContainer>
+            </Buttons>
+          </ButtonsWrapper>
+          <HamburgerMenu onClick={handleHamburgerClick} />
+        </HeaderNavi>
+      )}
+      {isMobileMenuOpen && (
+        <MobileMenu isOpen={isMobileMenuOpen}>
+          <CloseButton onClick={handleHamburgerClick}>&times;</CloseButton>
+          <MobileMenuItem
+            to="/"
+            onClick={() => handleMenuClick("home-section")}
+          >
+            Home
+          </MobileMenuItem>
+          <MobileMenuItem
+            to="/Skills"
+            onClick={() => handleMenuClick("skills-section")}
+          >
+            Skills
+          </MobileMenuItem>
+          <MobileMenuItem
+            to="/Project"
+            onClick={() => handleMenuClick("projects-section")}
+          >
+            Projects
+          </MobileMenuItem>
+          <MobileMenuItem
+            to="/etc"
+            onClick={() => handleMenuClick("contact-section")}
+          >
+            Contact
+          </MobileMenuItem>
+        </MobileMenu>
+      )}
+    </>
   );
 }
-
 export default Header;

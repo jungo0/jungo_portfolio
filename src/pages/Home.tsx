@@ -5,11 +5,11 @@ const Container = styled.section`
   position: relative;
   width: 100%;
   height: 100vh;
-  background-color: white;
+  background-color: #2427;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #2222;
   text-align: center;
   scroll-snap-align: start;
 `;

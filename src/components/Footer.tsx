@@ -28,8 +28,7 @@ const Wrapper = styled.div`
     font-size: 20px;
   }
 `;
-
-function Footer() {
+function Footer({ isMobileMenuOpen }: { isMobileMenuOpen: boolean }) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -48,7 +47,7 @@ function Footer() {
   }, []);
 
   return (
-    <FooterBar visible={isVisible}>
+    <FooterBar visible={isVisible && !isMobileMenuOpen}>
       <Wrapper>
         <div className="copyright">Copyright 2024 jungo</div>
       </Wrapper>
