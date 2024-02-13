@@ -275,7 +275,7 @@ const ArrowIcon = styled(FaArrowCircleRight)`
 function Header() {
   const location = useLocation().pathname;
   const navigate = useNavigate();
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1020);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -285,58 +285,50 @@ function Header() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
+
   const handleMobileMenuItemClick = () => {
     setIsMobileMenuOpen(false);
   };
-  const handleScroll = () => {
-    const scrollY = window.scrollY || document.documentElement.scrollTop;
-    setIsScrolled(scrollY > 0);
-  };
 
   const handleHamburgerClick = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+    setIsMobileMenuOpen((prev) => !prev);
   };
 
   const handleResize = useCallback(() => {
     const newIsMobile = window.innerWidth <= 1020;
     setIsMobile(newIsMobile);
 
-    if (newIsMobile && isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
+    if (newIsMobile) {
+      if (isMobileMenuOpen) {
+        document.body.style.overflow = "hidden";
+      }
     } else {
-      document.body.style.overflow = "visible";
+      if (isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+        document.body.style.overflow = "visible";
+      }
     }
-
-    if (isMobileMenuOpen && window.innerWidth > 1020) {
-      setIsMobileMenuOpen(false);
-    } else if (newIsMobile && !isMobileMenuOpen) {
-      setIsMobileMenuOpen(true);
-    }
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen, setIsMobileMenuOpen]);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", handleResize);
+    const handleWindowResize = () => {
+      handleResize();
+    };
+
+    window.addEventListener("resize", handleWindowResize);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", handleWindowResize);
     };
   }, [handleResize]);
 
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "visible";
-    }
-
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", handleResize);
+    handleResize();
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
+      if (isMobileMenuOpen) {
+        document.body.style.overflow = "visible";
+      }
     };
   }, [isMobileMenuOpen, handleResize]);
 
