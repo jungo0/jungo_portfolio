@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 import { FaSquareGithub } from "react-icons/fa6";
@@ -297,7 +297,7 @@ function Header() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     const newIsMobile = window.innerWidth <= 1020;
     setIsMobile(newIsMobile);
 
@@ -312,7 +312,8 @@ function Header() {
     } else if (newIsMobile && !isMobileMenuOpen) {
       setIsMobileMenuOpen(true);
     }
-  };
+  }, [isMobileMenuOpen]);
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleResize);
@@ -321,7 +322,7 @@ function Header() {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [handleResize]);
 
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -337,7 +338,7 @@ function Header() {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
     };
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen, handleResize]);
 
   return (
     <>
