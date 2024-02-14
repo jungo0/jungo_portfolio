@@ -2,7 +2,7 @@ import React from "react";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import AppRouter from "./components/Router";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import Contact from "./pages/Etc";
 import Skills from "./pages/Skills";
 import Project from "./pages/Project";

@@ -25,10 +25,9 @@ const HeaderNavi = styled.header<HeaderProps>`
   top: -2%;
   margin-top: -9px;
   background-color: white;
-  box-shadow: ${(props) =>
-    props.isScrolled ? "0 2px  rgba(0, 0, 0, 1)" : "none"};
+  box-shadow: ${(props) => (props.isScrolled ? "0 2px  #505050" : "none")};
   border-bottom: ${(props) =>
-    props.isScrolled ? "1px solid #1C1917" : "none"};
+    props.isScrolled ? "1px solid #292726" : "none"};
   left: 0;
   right: 0;
   z-index: 10;
@@ -38,9 +37,9 @@ const HeaderNavi = styled.header<HeaderProps>`
   padding: ${(props) =>
     props.isScrolled
       ? props.isMobileMenuOpen
-        ? "11px 0px 0px 0px"
-        : "11px 0px 0px 0px"
-      : "24px 0px 0px 0px"};
+        ? "15px 0px 0px 0px"
+        : "15px 0px 0px 0px"
+      : "26px 0px 0px 0px"};
   height: ${(props) => (props.isMobileMenuOpen ? "100vh" : "auto")};
   transition: background-color 0.2s, box-shadow 0.2s, padding 0.2s, height 0.3s;
 `;
@@ -133,13 +132,13 @@ const Buttons = styled.div<{ isScrolled: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin-top: ${(props) => (props.isScrolled ? "-9px" : "15px")};
+  margin-top: ${(props) => (props.isScrolled ? "-5px" : "12px")};
   transition: margin-top 0.3s ease;
 
   &::before {
     content: "About Me";
     font-size: 14px;
-    margin-bottom: 12px;
+    margin-bottom: 7px;
     color: #3e3e3e;
     font-weight: bold;
     opacity: ${(props) => (props.isScrolled ? 0 : 1)};
@@ -156,10 +155,12 @@ const Button = styled.button`
   color: RGB(41, 41, 41);
   background-color: #d4d8d9;
   cursor: pointer;
+  font-size: 15px;
   border: 0px solid #fff;
   border-radius: 5px;
-  padding: 5px 7px;
+  padding: 4px 5.5px;
   margin-right: 7px;
+  margin-bottom: -2.5px;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s,
     transform 0.3s;
 
@@ -180,7 +181,7 @@ const HamburgerMenu = styled(RxHamburgerMenu)<{ isScrolled: boolean }>`
     cursor: pointer;
     text-align: center;
     margin-right: 30px;
-    margin-bottom: ${(props) => (props.isScrolled ? "8px" : "26px")};
+    margin-bottom: ${(props) => (props.isScrolled ? "8px" : "22px")};
     margin-top: ${(props) => (props.isScrolled ? "24px" : "26px")};
     color: #3e3e3e;
     font-weight: 200;
@@ -256,13 +257,13 @@ const RedButton = styled.button`
   background-color: #ea3800;
   color: #fff;
   font-size: 16px;
-  width: 150px;
+  width: 170px;
   height: 50px;
   padding: 10px 20px;
   border: none;
   border-radius: 51px;
   cursor: pointer;
-  margin-top: 50px;
+  margin-top: 150px;
   margin-left: 40%;
 
   &:hover {
@@ -271,7 +272,10 @@ const RedButton = styled.button`
 `;
 const ArrowIcon = styled(FaArrowCircleRight)`
   margin-left: 5px;
+  position: relative;
+  bottom: -2px;
 `;
+
 function Header() {
   const location = useLocation().pathname;
   const navigate = useNavigate();
