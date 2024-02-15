@@ -127,7 +127,7 @@ const Gauge = styled.div<{ percentage: number }>`
     height: 100%;
     width: ${({ percentage }) => `${percentage}%`};
     background-color: #3498db;
-    animation: ${({ percentage }) => gaugeAnimation(percentage)} 2s ease-in-out;
+    animation: ${({ percentage }) => gaugeAnimation(percentage)} 1s ease-in-out;
   }
 `;
 const PaginationContainer = styled.div`
@@ -150,7 +150,6 @@ const PageButton = styled.button`
     background-color: #2980b9;
   }
 `;
-
 function Skills() {
   const itemsPerPage = 4;
   const [currentPage, setCurrentPage] = useState(1);
@@ -158,7 +157,7 @@ function Skills() {
     "Basic" | "Library" | "DataBase" | "Others"
   >(categories[0]);
   const [currentPercentage, setCurrentPercentage] = useState(0);
-
+  const [key, setKey] = useState(0);
   const totalItems =
     selectedCategory === "Basic"
       ? Object.keys(basicSkills).length
@@ -178,6 +177,7 @@ function Skills() {
   ) => {
     setSelectedCategory(category);
     setCurrentPage(1);
+    setKey((prevKey) => prevKey + 1);
   };
 
   const getCategorySkills = () => {
@@ -245,6 +245,7 @@ function Skills() {
                     {item}
                   </SubTitle>
                   <Gauge
+                    key={key}
                     percentage={
                       getCategorySkills()[`${selectedCategory}${item}`]
                         ?.percentage || 0
