@@ -65,7 +65,7 @@ const Menu = styled.div<{
 }>`
   display: ${(props) => (props.isMobile ? "none" : "flex")};
   position: sticky;
-  left: 32%;
+  left: 20%;
   opacity: ${(props) => (props.isMobileMenuOpen ? 0 : 1)};
   transition: opacity 0.3s ease;
   ${(props) =>
@@ -165,7 +165,7 @@ const Button = styled.button`
     transform 0.3s;
 
   &:hover {
-    background-color: rgba(60, 103, 222, 0.9);
+    background-color: #3c67de;
     color: #fff;
     border-color: #fff;
     transform: translateY(-1px);

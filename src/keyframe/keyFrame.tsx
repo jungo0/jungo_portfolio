@@ -1,3 +1,5 @@
+import { keyframes } from "styled-components";
+
 export const showHide = {
   start: {
     opacity: 0,
@@ -24,3 +26,12 @@ export const showHideChild = {
     opacity: 1,
   },
 };
+
+export const gaugeAnimation = keyframes`
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+`;
