@@ -1,8 +1,20 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
-import skillsDb from "../etc/skillsdb";
+import {
+  basicSkills,
+  librarySkills,
+  databaseSkills,
+  othersSkills,
+} from "../etc/skillsdb";
 import reactImage from "../img/skills/react.png";
 import { gaugeAnimation } from "../keyframe/keyFrame";
+
+const categories: ("Basic" | "Library" | "DataBase" | "Others")[] = [
+  "Basic",
+  "Library",
+  "DataBase",
+  "Others",
+];
 
 const Wrapper = styled.div`
   position: relative;
@@ -48,15 +60,13 @@ const ContentContainer = styled.section`
   width: 100%;
   margin: 0 auto;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
   align-items: center;
   color: #333;
   text-align: center;
-  flex-wrap: wrap;
 `;
-
 const ListItem = styled.div`
-  width: calc(50% - 20px);
+  width: calc(70% - 20px);
   margin: 10px;
   display: flex;
   flex-direction: row-reverse;
@@ -137,20 +147,22 @@ const PageButton = styled.button`
     background-color: #2980b9;
   }
 `;
-const categories: ("Basic" | "Library" | "DataBase" | "Others")[] = [
-  "Basic",
-  "Library",
-  "DataBase",
-  "Others",
-];
+
 function Skills() {
-  const itemsPerPage = 6;
+  const itemsPerPage = 4;
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<
-    keyof typeof skillsDb
+    "Basic" | "Library" | "DataBase" | "Others"
   >(categories[0]);
 
-  const totalItems = 12;
+  const totalItems =
+    selectedCategory === "Basic"
+      ? Object.keys(basicSkills).length
+      : selectedCategory === "Library"
+      ? Object.keys(librarySkills).length
+      : selectedCategory === "DataBase"
+      ? Object.keys(databaseSkills).length
+      : Object.keys(othersSkills).length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const handlePageChange = (page: React.SetStateAction<number>) => {
@@ -162,6 +174,21 @@ function Skills() {
   ) => {
     setSelectedCategory(category);
     setCurrentPage(1);
+  };
+
+  const getCategorySkills = () => {
+    switch (selectedCategory) {
+      case "Basic":
+        return basicSkills as Record<string, any>;
+      case "Library":
+        return librarySkills as Record<string, any>;
+      case "DataBase":
+        return databaseSkills as Record<string, any>;
+      case "Others":
+        return othersSkills as Record<string, any>;
+      default:
+        return {} as Record<string, any>;
+    }
   };
 
   const paginatedData = Array.from(
@@ -194,15 +221,17 @@ function Skills() {
             <ListItem key={item}>
               <TextContainer>
                 <SubTitle>
-                  {skillsDb[selectedCategory].subtitle} {item}
+                  {getCategorySkills()[`${selectedCategory}${item}`]?.subtitle}{" "}
+                  {item}
                 </SubTitle>
                 <Gauge />
                 <Title>
-                  {skillsDb[selectedCategory].title} {item}
+                  {getCategorySkills()[`${selectedCategory}${item}`]?.title}{" "}
+                  {item}
                 </Title>
               </TextContainer>
               <Image
-                src={skillsDb[selectedCategory].image}
+                src={getCategorySkills()[`${selectedCategory}${item}`]?.image}
                 alt={`${selectedCategory} Image ${item}`}
               />
             </ListItem>
