@@ -27,11 +27,11 @@ export const showHideChild = {
   },
 };
 
-export const gaugeAnimation = keyframes`
+export const gaugeAnimation = (percentage: number) => keyframes`
   from {
     width: 0;
   }
   to {
-    width: 100%;
+    width: ${percentage}%;
   }
 `;

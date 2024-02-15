@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import {
   basicSkills,
@@ -6,7 +6,6 @@ import {
   databaseSkills,
   othersSkills,
 } from "../etc/skillsdb";
-import reactImage from "../img/skills/react.png";
 import { gaugeAnimation } from "../keyframe/keyFrame";
 
 const categories: ("Basic" | "Library" | "DataBase" | "Others")[] = [
@@ -18,13 +17,13 @@ const categories: ("Basic" | "Library" | "DataBase" | "Others")[] = [
 
 const Wrapper = styled.div`
   position: relative;
-  width: 70%;
-  height: 70%;
+  max-height: 1500px;
+  min-height: 600px;
   display: flex;
   margin: 0 auto;
   justify-content: center;
-  max-width: 1200px;
-  min-width: 1000px;
+  max-width: 1800px;
+  min-width: 1200px;
   box-sizing: border-box;
 `;
 
@@ -38,9 +37,10 @@ const MainContainer = styled.div`
 const Sidebar = styled.aside`
   width: 20%;
   display: flex;
+  font-size: 1.7rem;
   background-color: #9e8361;
   color: #333;
-  padding: 10px;
+  padding: 30px;
   position: relative;
   ul {
     padding: 0px;
@@ -55,23 +55,28 @@ const Sidebar = styled.aside`
 
 const ContentContainer = styled.section`
   flex: 1;
+  box-sizing: border-box;
   background-color: #9e6971;
   max-width: 960px;
-  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   color: #333;
   text-align: center;
+  flex-wrap: wrap;
+  min-height: 650px;
+  overflow-y: auto;
 `;
+
 const ListItem = styled.div`
-  width: calc(70% - 20px);
-  margin: 10px;
+  width: calc(100% - 50px);
+  position: relative;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
   max-width: 400px;
+  margin: 20px;
 `;
 
 const Image = styled.img`
@@ -107,35 +112,33 @@ const Title = styled.h2`
   margin-top: 5px;
 `;
 
-const Gauge = styled.div`
+const Gauge = styled.div<{ percentage: number }>`
   width: 100%;
-  height: 10px;
+  height: 13px;
   border-radius: 15px;
   background-color: #fff;
   margin-top: 5px;
   overflow: hidden;
   position: relative;
+
   &:after {
     content: "";
     display: block;
     height: 100%;
-    width: 100%;
+    width: ${({ percentage }) => `${percentage}%`};
     background-color: #3498db;
-    animation: ${gaugeAnimation} 2s ease;
+    animation: ${({ percentage }) => gaugeAnimation(percentage)} 2s ease-in-out;
   }
 `;
-
 const PaginationContainer = styled.div`
-  display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: flex-end;
-  top: 50px;
-  right: 100px;
+  position: absolute;
+  justify-content: flex-end;
+  margin-top: 600px;
+  margin-left: 770px;
 `;
 
 const PageButton = styled.button`
-  margin: 0 5px;
+  margin-left: 20px;
   padding: 5px 10px;
   background-color: #3498db;
   color: white;
@@ -154,6 +157,7 @@ function Skills() {
   const [selectedCategory, setSelectedCategory] = useState<
     "Basic" | "Library" | "DataBase" | "Others"
   >(categories[0]);
+  const [currentPercentage, setCurrentPercentage] = useState(0);
 
   const totalItems =
     selectedCategory === "Basic"
@@ -196,64 +200,87 @@ function Skills() {
     (_, index) => index + 1
   ).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
+  useEffect(() => {
+    setCurrentPercentage(0);
+
+    const timeoutId = setTimeout(() => {
+      setCurrentPercentage(
+        getCategorySkills()[`${selectedCategory}${currentPage}`]?.percentage ||
+          0
+      );
+    }, 200);
+
+    return () => clearTimeout(timeoutId);
+  }, [selectedCategory, currentPage]);
   return (
-    <MainContainer>
-      <FrontendText>frontend</FrontendText>
-      <Wrapper>
-        <Sidebar>
-          <ul>
-            {categories.map((category) => (
-              <li
-                key={category}
-                onClick={() => handleCategoryClick(category)}
-                style={{
-                  backgroundColor:
-                    selectedCategory === category ? "#2980b9" : "#3498db",
-                }}
-              >
-                {category}
-              </li>
+    <>
+      <MainContainer>
+        <FrontendText>frontend</FrontendText>
+        <Wrapper>
+          <Sidebar>
+            <ul>
+              {categories.map((category) => (
+                <li
+                  key={category}
+                  onClick={() => handleCategoryClick(category)}
+                  style={{
+                    backgroundColor:
+                      selectedCategory === category ? "#2980b9" : "#3498db",
+                  }}
+                >
+                  {category}
+                </li>
+              ))}
+            </ul>
+          </Sidebar>
+          <ContentContainer id="skills-section">
+            {paginatedData.map((item) => (
+              <ListItem key={item}>
+                <TextContainer>
+                  <SubTitle>
+                    {
+                      getCategorySkills()[`${selectedCategory}${item}`]
+                        ?.subtitle
+                    }{" "}
+                    {item}
+                  </SubTitle>
+                  <Gauge
+                    percentage={
+                      getCategorySkills()[`${selectedCategory}${item}`]
+                        ?.percentage || 0
+                    }
+                  />
+                  <Title>
+                    {getCategorySkills()[`${selectedCategory}${item}`]?.title}{" "}
+                    {item}
+                  </Title>
+                </TextContainer>
+                <Image
+                  src={getCategorySkills()[`${selectedCategory}${item}`]?.image}
+                  alt={`${selectedCategory} Image ${item}`}
+                />
+              </ListItem>
             ))}
-          </ul>
-        </Sidebar>
-        <ContentContainer id="skills-section">
-          {paginatedData.map((item) => (
-            <ListItem key={item}>
-              <TextContainer>
-                <SubTitle>
-                  {getCategorySkills()[`${selectedCategory}${item}`]?.subtitle}{" "}
-                  {item}
-                </SubTitle>
-                <Gauge />
-                <Title>
-                  {getCategorySkills()[`${selectedCategory}${item}`]?.title}{" "}
-                  {item}
-                </Title>
-              </TextContainer>
-              <Image
-                src={getCategorySkills()[`${selectedCategory}${item}`]?.image}
-                alt={`${selectedCategory} Image ${item}`}
-              />
-            </ListItem>
-          ))}
-        </ContentContainer>
-        <PaginationContainer>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-            (page) => (
-              <PageButton
-                key={page}
-                onClick={() => handlePageChange(page)}
-                style={{
-                  backgroundColor: currentPage === page ? "#2980b9" : "#3498db",
-                }}
-              >
-                {page}
-              </PageButton>
-            )
-          )}
-        </PaginationContainer>
-      </Wrapper>
-    </MainContainer>
+            <PaginationContainer>
+              {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+                (page) => (
+                  <PageButton
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    style={{
+                      backgroundColor:
+                        currentPage === page ? "#2980b9" : "#3498db",
+                    }}
+                  >
+                    {page}
+                  </PageButton>
+                )
+              )}
+            </PaginationContainer>
+          </ContentContainer>
+        </Wrapper>
+      </MainContainer>
+    </>
   );
 }
 
