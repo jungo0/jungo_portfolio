@@ -7,6 +7,21 @@ import {
   othersSkills,
 } from "../etc/skillsdb";
 import { gaugeAnimation } from "../keyframe/keyFrame";
+interface StyledLiProps {
+  isSelected: boolean;
+}
+const StyledLi = styled.li<StyledLiProps>`
+  margin-bottom: 10px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease-in-out;
+
+  color: ${({ isSelected }) => (isSelected ? "#222935" : "#b6b8bc")};
+
+  &:hover {
+    color: #222935;
+  }
+`;
 
 const categories: ("Basic" | "Library" | "DataBase" | "Others")[] = [
   "Basic",
@@ -18,7 +33,7 @@ const categories: ("Basic" | "Library" | "DataBase" | "Others")[] = [
 const Wrapper = styled.div`
   position: relative;
   max-height: 1500px;
-  min-height: 600px;
+  min-height: 700px;
   display: flex;
   margin: 0 auto;
   justify-content: center;
@@ -31,52 +46,65 @@ const MainContainer = styled.div`
   position: relative;
   display: flex;
   height: 100vh;
+  padding-top: 150px;
   align-items: center;
+  background-color: #f9f6f0;
+`;
+const IndicatorCircle = styled.div<{ isSelected?: boolean }>`
+  width: inline;
+  margin-top: 11px;
+  height: 6px;
+  border-radius: 5px;
+  background-color: #0553dd;
+  opacity: ${({ isSelected }) => (isSelected ? 0.8 : 0)};
+  transition: opacity 0.3s ease-in-out;
 `;
 
 const Sidebar = styled.aside`
   width: 20%;
   display: flex;
   font-size: 1.7rem;
-  background-color: #9e8361;
-  color: #333;
+  background-color: rgba(249, 246, 240, 0);
+  color: #b6b8bc;
   padding: 30px;
   position: relative;
+
   ul {
     padding: 0px;
     margin: 0;
     list-style: none;
-  }
-  li {
-    margin-bottom: 10px;
-    cursor: pointer;
   }
 `;
 
 const ContentContainer = styled.section`
   flex: 1;
   box-sizing: border-box;
-  background-color: #9e6971;
+  background-color: #f9f6f0;
   max-width: 960px;
   margin: 0 auto;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #333;
-  text-align: center;
   flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: #333;
   min-height: 650px;
+
   overflow-y: auto;
+  position: relative;
 `;
 
 const ListItem = styled.div`
-  width: calc(100% - 50px);
+  width: calc(50.33% - 20px);
   position: relative;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
   max-width: 400px;
-  margin: 20px;
+  margin: 20px 10px 0;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 12px;
 `;
 
 const Image = styled.img`
@@ -90,16 +118,16 @@ const TextContainer = styled.div`
 `;
 
 const FrontendText = styled.h1`
-  position: absolute;
-  font-size: 2.2rem;
-  left: 50px;
-  top: 50px;
+  font-size: 3rem;
   color: #333;
+  position: absolute;
+  top: -140px;
+  left: -23px;
+  margin: 50px 0 0 50px;
 `;
-
 const SubTitle = styled.h3`
   font-size: 0.8rem;
-  margin-top: 5px;
+  margin-top: 8px;
   text-align: left;
   background-color: white;
   border: 2px solid #ced5de;
@@ -109,14 +137,15 @@ const SubTitle = styled.h3`
 `;
 
 const Title = styled.h2`
-  margin-top: 5px;
+  margin-top: 8px;
+  font-size: 0.9rem;
 `;
 
 const Gauge = styled.div<{ percentage: number }>`
   width: 100%;
   height: 13px;
   border-radius: 15px;
-  background-color: #fff;
+  background-color: #e2e8f0;
   margin-top: 5px;
   overflow: hidden;
   position: relative;
@@ -126,14 +155,14 @@ const Gauge = styled.div<{ percentage: number }>`
     display: block;
     height: 100%;
     width: ${({ percentage }) => `${percentage}%`};
-    background-color: #3498db;
+    background-color: #0553dd;
     animation: ${({ percentage }) => gaugeAnimation(percentage)} 1s ease-in-out;
   }
 `;
 const PaginationContainer = styled.div`
   position: absolute;
   justify-content: flex-end;
-  margin-top: 600px;
+  margin-top: 650px;
   margin-left: 770px;
 `;
 
@@ -151,7 +180,7 @@ const PageButton = styled.button`
   }
 `;
 function Skills() {
-  const itemsPerPage = 4;
+  const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<
     "Basic" | "Library" | "DataBase" | "Others"
@@ -212,24 +241,23 @@ function Skills() {
 
     return () => clearTimeout(timeoutId);
   }, [selectedCategory, currentPage]);
+
   return (
     <>
       <MainContainer>
-        <FrontendText>frontend</FrontendText>
         <Wrapper>
+          <FrontendText>FE/SKills</FrontendText>
           <Sidebar>
             <ul>
               {categories.map((category) => (
-                <li
+                <StyledLi
                   key={category}
                   onClick={() => handleCategoryClick(category)}
-                  style={{
-                    backgroundColor:
-                      selectedCategory === category ? "#2980b9" : "#3498db",
-                  }}
+                  isSelected={selectedCategory === category}
                 >
                   {category}
-                </li>
+                  <IndicatorCircle isSelected={selectedCategory === category} />
+                </StyledLi>
               ))}
             </ul>
           </Sidebar>
@@ -242,7 +270,6 @@ function Skills() {
                       getCategorySkills()[`${selectedCategory}${item}`]
                         ?.subtitle
                     }{" "}
-                    {item}
                   </SubTitle>
                   <Gauge
                     key={key}
@@ -253,7 +280,6 @@ function Skills() {
                   />
                   <Title>
                     {getCategorySkills()[`${selectedCategory}${item}`]?.title}{" "}
-                    {item}
                   </Title>
                 </TextContainer>
                 <Image

@@ -1,17 +1,22 @@
-import React, { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { Link as ScrollLink } from "react-scroll";
 import list_icon from "../../img/list_icon.png";
 import profile from "../../img/profile.jpg";
 import { FaArrowDownLong } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { showHide, showHideChild } from "../../keyframe/keyFrame";
 import { useInterval } from "../../hooks/setInterVal";
-import { Link } from "react-router-dom";
+import background from "../../img/background1.png";
+import { GlobalStyle } from "../../styles/theme";
 
 const HomeContainer = styled.section`
+  padding-top: 100px;
   position: relative;
-  height: 70vh;
-  background-color: #f9f6f0;
+  height: 72vh;
+  background-image: url(${background});
+  background-size: cover;
+  background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,9 +27,10 @@ const HomeContainer = styled.section`
 
 const Wrapper = styled(motion.div)`
   display: flex;
-  width: 60%;
+  width: 65%;
   position: relative;
-  background-color: #f9f6f0;
+  min-width: 300px;
+  min-height: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,6 +48,9 @@ const Wrapper = styled(motion.div)`
     width: 4.375rem;
     height: 0.313rem;
     background-color: ${(props) => props.theme.bgColor};
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
   }
 `;
 
@@ -78,15 +87,17 @@ const Animation = styled(motion.h3)`
 
 const TextBox = styled.div`
   flex: 1;
-  padding: 25px;
+  padding: 35px;
   display: flex;
+  min-width: 360px;
+  min-height: 320px;
   flex-direction: column;
 `;
 
 const Column = styled.div`
   flex: 1;
   display: flex;
-  flex-direction: row;
+  min-width: 350px;
   align-items: center;
 `;
 
@@ -95,16 +106,16 @@ const Image = styled.img`
   height: 80%;
   border-radius: 15px;
   margin-top: 60px;
+
   @media (max-width: 1020px) {
-    width: 300px;
-    height: 400px;
-    margin-top: 60px;
+    width: 230px;
+    height: 300px;
   }
+
   @media (max-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 75%;
+    height: 70%;
+    margin-bottom: 100px;
   }
 `;
 
@@ -125,7 +136,10 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
-
+  @media (max-width: 768px) {
+    justify-content: center;
+    align-items: center;
+  }
   &:hover {
     background-color: #d33201;
   }
@@ -138,12 +152,16 @@ const Button = styled.button`
 const ButtonText = styled.span`
   margin-right: 10px;
   color: white;
+  font-weight: 500;
+  font-size: 0.9rem;
 `;
 function Home() {
   const divtag = useRef<HTMLDivElement>(null);
   let arrIndex = 0;
   const WORD_TYPING_SPEED = 1000;
   const msgArr = ["Creative", "Developer", "good"];
+
+  const [scrollOffset, setScrollOffset] = useState(-560);
 
   const onChangeMsg = () => {
     if (divtag.current) {
@@ -162,8 +180,24 @@ function Home() {
     onChangeMsg();
   }, WORD_TYPING_SPEED);
 
+  const updateScrollOffset = () => {
+    const windowHeight = window.innerHeight;
+    const newOffset = windowHeight < 940 ? 20 : -480;
+    setScrollOffset(newOffset);
+  };
+
+  useEffect(() => {
+    updateScrollOffset();
+
+    window.addEventListener("resize", updateScrollOffset);
+
+    return () => {
+      window.removeEventListener("resize", updateScrollOffset);
+    };
+  }, []);
   return (
     <HomeContainer id="home-section">
+      <GlobalStyle />
       <Wrapper variants={showHide} initial="start" animate="end">
         <TextBox>
           <h1
@@ -195,52 +229,67 @@ function Home() {
           </Animation>
           <h2
             style={{
-              fontSize: "2.5rem",
-              marginBottom: "10px",
-              fontWeight: "500",
+              fontSize: "2rem",
+              marginBottom: "40px",
+              fontWeight: 100,
               textAlign: "left",
+              color: "#1C1917",
             }}
           >
             안녕하세요
           </h2>
           <h2
             style={{
-              fontSize: "2.5rem",
+              fontSize: "2rem",
               marginBottom: "10px",
-              fontWeight: "500",
+              fontWeight: 700,
               textAlign: "left",
+              color: "#1D4ED8",
             }}
           >
-            프론튼엔드 개발자
+            프론트엔드 개발자
           </h2>
           <h2
             style={{
-              fontSize: "2.5rem",
+              fontSize: "3.5rem",
               marginBottom: "2.8rem",
-              fontWeight: "500",
+              fontWeight: 1000,
+              fontStyle: "bold",
               textAlign: "left",
+              color: "#212121",
             }}
           >
             민정호입니다.
           </h2>
           <p
             style={{
-              fontSize: "1.5rem",
+              fontSize: "1.2rem",
               textAlign: "left",
-              fontWeight: "340",
+              fontWeight: 100,
               marginBottom: "4.5rem",
-              maxWidth: "400px",
+              maxWidth: "420px",
               lineHeight: "1.2",
+              opacity: "0.9",
+              color: "#718096",
             }}
           >
-            안녕하세요. 공부가 취미인 풀 스택 웹 개발자입니다. 매우 꼼꼼한 성격,
-            그리고 공부를 밥 먹듯이 하는 습관이 저의 장점입니다.
+            안녕하세요. 공부가 취미인 풀 스택 웹 개발자입니다. 매우 꼼꼼한
+            성격,우 꼼꼼한 성격, 그리고 공부를 밥 먹듯이 하는 습관이 저의
+            장점입니다.우 꼼꼼한 성격,우 꼼꼼한 성격,
           </p>
           <Column>
-            <Button>
-              <ButtonText>더 알아보기</ButtonText>
-              <Icon />
-            </Button>
+            <ScrollLink
+              to="skills-section"
+              spy={true}
+              smooth={true}
+              offset={scrollOffset}
+              duration={500}
+            >
+              <Button>
+                <ButtonText>더 알아보기</ButtonText>
+                <Icon />
+              </Button>
+            </ScrollLink>
           </Column>
         </TextBox>
         <Image src={profile} alt="Profile" />
