@@ -9,13 +9,13 @@ import Project from "./../pages/Project";
 function Router() {
   return (
     <Routes>
-      <Route element={<Display />}>
+      <Route path="/" element={<Display />}>
         <Route path="/" element={<Home />} />
         <Route path="/Skills" element={<Skills />} />
         <Route path="/project" element={<Project />} />
         <Route path="/etc" element={<Etc />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
-      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

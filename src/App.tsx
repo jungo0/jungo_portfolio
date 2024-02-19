@@ -7,7 +7,7 @@ import Contact from "./pages/Etc";
 import Skills from "./pages/Skills";
 import Project from "./pages/Project";
 import { BrowserRouter as Router } from "react-router-dom";
-
+import Modal from "./components/Modal";
 function App() {
   return (
     <Router>
@@ -16,6 +16,7 @@ function App() {
       <Skills />
       <Project />
       <Contact />
+      <Modal />
       <AppRouter />
       <Footer isMobileMenuOpen={false} />
     </Router>

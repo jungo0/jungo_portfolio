@@ -165,20 +165,43 @@ const PaginationContainer = styled.div`
   margin-top: 650px;
   margin-left: 770px;
 `;
-
 const PageButton = styled.button`
-  margin-left: 20px;
-  padding: 5px 10px;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  padding: 8.5px 11px;
+  background-color: white;
+  margin: 2px;
+  color: #808080;
+  border-radius: 50%;
+  border: 1px solid #c9d1db;
+  cursor: pointer;
+  transition: background-color 0.4s, color 0.3s;
+`;
+
+const LeftArrow = styled.button`
+  padding: 8.5px 11px;
+  border: 1px solid #c9d1db;
+  background-color: white;
+  color: #808080;
+  border-radius: 50%;
   cursor: pointer;
 
   &:hover {
-    background-color: #2980b9;
+    background-color: #e7e7e7;
   }
 `;
+
+const RightArrow = styled.button`
+  padding: 8.5px 11px;
+  border: 1px solid #c9d1db;
+  background-color: white;
+  color: #808080;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #e7e7e7;
+  }
+`;
+
 function Skills() {
   const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
@@ -242,6 +265,14 @@ function Skills() {
     return () => clearTimeout(timeoutId);
   }, [selectedCategory, currentPage]);
 
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => Math.max(1, prevPage - 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(totalPages, prevPage + 1));
+  };
+
   return (
     <>
       <MainContainer>
@@ -289,6 +320,7 @@ function Skills() {
               </ListItem>
             ))}
             <PaginationContainer>
+              <LeftArrow onClick={handlePrevPage}> ˂</LeftArrow>
               {Array.from({ length: totalPages }, (_, index) => index + 1).map(
                 (page) => (
                   <PageButton
@@ -296,13 +328,15 @@ function Skills() {
                     onClick={() => handlePageChange(page)}
                     style={{
                       backgroundColor:
-                        currentPage === page ? "#2980b9" : "#3498db",
+                        currentPage === page ? "RGB(77, 161, 248)" : "white",
+                      color: currentPage === page ? "white" : "#828282",
                     }}
                   >
                     {page}
                   </PageButton>
                 )
               )}
+              <RightArrow onClick={handleNextPage}>˃</RightArrow>
             </PaginationContainer>
           </ContentContainer>
         </Wrapper>
