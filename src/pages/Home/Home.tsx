@@ -13,7 +13,8 @@ import { GlobalStyle } from "../../styles/theme";
 const HomeContainer = styled.section`
   padding-top: 100px;
   position: relative;
-  height: 86vh;
+  padding-bottom: 200px;
+  height: 72vh;
   background-image: url(${background});
   background-size: cover;
   background-position: center;

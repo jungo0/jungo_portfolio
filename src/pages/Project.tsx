@@ -11,7 +11,6 @@ import { Loading } from "../components/Loading";
 import Modal from "../components/Modal";
 import { ModalText } from "../etc/atom";
 import arrow from "../img/arrow.png";
-import media from "../styles/media";
 
 const Container = styled(motion.section)`
   height: auto;
@@ -194,7 +193,7 @@ function Project() {
 
   return (
     <Container id="projects-section">
-      <TitleForm titleName="프로젝트" />
+      <TitleForm titleName="Projects" />
       <div className="button">
         <button onClick={() => Setshape((prev) => !prev)}>
           {shape ? <FaGripLines /> : <BsGridFill />}
