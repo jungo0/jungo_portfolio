@@ -13,7 +13,6 @@ import { FaTools } from "react-icons/fa";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaRegCheckCircle } from "react-icons/fa";
 import media from "../styles/media";
-
 interface ButtonProps {
   icon: React.ReactNode;
   label: string;
@@ -21,9 +20,9 @@ interface ButtonProps {
 }
 const Overlay = styled(motion.div)`
   position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 172%;
+  width: 450%;
+  height: 600vh;
+  top: 0%;
   left: 0;
   z-index: 110;
   background-color: rgba(0, 0, 0, 0.3);
@@ -55,7 +54,7 @@ const Close = styled.div`
 `;
 const Container = styled(motion.div)`
   position: fixed;
-  top: 50%;
+  top: 53%;
   width: 60%;
   height: 64%;
   max-width: 770px;
@@ -83,7 +82,6 @@ const Contents = styled(motion.div)`
     0 10px 20px rgba(255, 255, 255, 0.06);
   display: flex;
   flex-direction: column;
-
   .image {
     object-fit: cover;
     img {
@@ -291,6 +289,11 @@ function Modal() {
   const [id, setId] = useRecoilState(ModalText);
   const [DB, setDB] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const hidden = () => {
+    setId("");
+    setIsModalOpen(false);
+    document.body.style.overflow = "auto";
+  };
 
   useEffect(() => {
     fetchProject().then((data) => {
@@ -299,22 +302,12 @@ function Modal() {
       }));
       setDB(context);
     });
-    return () => {
-      fetchProject();
-    };
   }, []);
-
-  const hidden = () => {
-    setId("");
-    setIsModalOpen(false);
-    document.body.style.overflow = "auto";
-  };
 
   return (
     <AnimatePresence>
       {id ? (
         <>
-          <Overlay onClick={hidden} />
           <Container
             variants={modalBackGround}
             initial={isModalOpen ? "start" : "init"}

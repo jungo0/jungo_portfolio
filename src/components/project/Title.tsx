@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 const TitleText = styled.div`
   overflow: hidden;
   font-size: 2.3rem;
-  margin-bottom: 0.938rem;
+  margin-bottom: 0rem;
   color: rgba(1, 1, 1, 0.7);
   span {
     display: inline-block;
@@ -18,7 +18,7 @@ const TitleText = styled.div`
       margin-left: 1.563rem;
       position: absolute;
       width: 5000px;
-      height: 1px;
+      height: 1.2px;
       background-color: #7d7789;
       left: 100%;
       top: 50%;

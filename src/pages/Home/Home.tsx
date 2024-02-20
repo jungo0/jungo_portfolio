@@ -13,23 +13,24 @@ import { GlobalStyle } from "../../styles/theme";
 const HomeContainer = styled.section`
   padding-top: 100px;
   position: relative;
-  height: 72vh;
+  height: 86vh;
   background-image: url(${background});
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1c1917;
   text-align: center;
   scroll-snap-align: start;
 `;
 
 const Wrapper = styled(motion.div)`
   display: flex;
-  width: 65%;
+  width: 55%;
   position: relative;
   min-width: 300px;
+  max-width: 1100px;
+  min-height: 320px;
   min-height: 320px;
   display: flex;
   align-items: center;
@@ -102,20 +103,21 @@ const Column = styled.div`
 `;
 
 const Image = styled.img`
-  width: 40%;
-  height: 80%;
+  width: 400px;
+  height: 450px;
   border-radius: 15px;
   margin-top: 60px;
 
-  @media (max-width: 1020px) {
-    width: 230px;
-    height: 300px;
+  @media (max-width: 1500px) {
+    width: 320px;
+    height: 370px;
   }
 
   @media (max-width: 768px) {
-    width: 75%;
-    height: 70%;
-    margin-bottom: 100px;
+    width: 55%;
+    height: 60%;
+    display: none;
+    margin-top: -57%;
   }
 `;
 
@@ -182,7 +184,7 @@ function Home() {
 
   const updateScrollOffset = () => {
     const windowHeight = window.innerHeight;
-    const newOffset = windowHeight < 940 ? 20 : -480;
+    const newOffset = windowHeight < 1100 ? 520 : -480;
     setScrollOffset(newOffset);
   };
 
@@ -256,6 +258,7 @@ function Home() {
               fontWeight: 1000,
               fontStyle: "bold",
               textAlign: "left",
+              whiteSpace: "nowrap",
               color: "#212121",
             }}
           >

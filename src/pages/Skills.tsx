@@ -7,6 +7,53 @@ import {
   othersSkills,
 } from "../etc/skillsdb";
 import { gaugeAnimation } from "../keyframe/keyFrame";
+import media from "../styles/media";
+const TitleText = styled.div`
+  overflow: hidden;
+  font-size: 2.3rem;
+  margin-bottom: 0rem;
+  color: rgba(1, 1, 1, 0.7);
+  span {
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    position: relative;
+    letter-spacing: 7px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #333;
+    &::after {
+      content: "";
+      margin-left: 1.563rem;
+      position: absolute;
+      width: 5000px;
+      height: 1.2px;
+      background-color: #7d7789;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+  @media ${(props) => props.theme.mobile} {
+    span {
+      letter-spacing: 2px;
+    }
+  }
+`;
+interface titleText {
+  titleName: string;
+}
+interface titleText {
+  titleName: string;
+}
+
+function TitleForm(props: titleText) {
+  return (
+    <TitleText>
+      <span>{props.titleName}</span>
+    </TitleText>
+  );
+}
+
 interface StyledLiProps {
   isSelected: boolean;
 }
@@ -31,27 +78,21 @@ const categories: ("Basic" | "Library" | "DataBase" | "Others")[] = [
 ];
 
 const Wrapper = styled.div`
-  position: relative;
-  max-height: 1500px;
-  min-height: 700px;
-  display: flex;
-  margin: 0 auto;
-  justify-content: center;
-  max-width: 1800px;
-  min-width: 1200px;
-  box-sizing: border-box;
+  height: auto;
+  background-color: #f9f6f0;
+  padding: 6rem 9rem 6rem 9rem;
+
+  ${media.tablet`
+    padding: 4rem;
+  `}
+
+  ${media.mobile`
+    padding: 2rem;
+  `}
 `;
 
-const MainContainer = styled.div`
-  position: relative;
-  display: flex;
-  height: 100vh;
-  padding-top: 150px;
-  align-items: center;
-  background-color: #f9f6f0;
-`;
 const IndicatorCircle = styled.div<{ isSelected?: boolean }>`
-  width: inline;
+  width: 120px;
   margin-top: 11px;
   height: 6px;
   border-radius: 5px;
@@ -59,54 +100,81 @@ const IndicatorCircle = styled.div<{ isSelected?: boolean }>`
   opacity: ${({ isSelected }) => (isSelected ? 0.8 : 0)};
   transition: opacity 0.3s ease-in-out;
 `;
-
+const Container = styled.div`
+  display: flex;
+  height: auto;
+`;
 const Sidebar = styled.aside`
-  width: 20%;
+  flex: 0 0 20%;
   display: flex;
   font-size: 1.7rem;
   background-color: rgba(249, 246, 240, 0);
   color: #b6b8bc;
   padding: 30px;
-  position: relative;
 
   ul {
     padding: 0px;
     margin: 0;
     list-style: none;
   }
+  @media (max-width: 1220px) {
+    font-size: 1.3rem;
+    flex: 0 0 10%;
+  }
+  ${media.mobile`
+  display:none;
+  font-size:0.2rem;
+  display:none;
+  padding: 10px;
+  `}
+  ${media.tablet`
+  flex: 0 0 10%;
+  bottom:-6%;
+  `}
 `;
-
 const ContentContainer = styled.section`
   flex: 1;
   box-sizing: border-box;
   background-color: #f9f6f0;
-  max-width: 960px;
-  margin: 0 auto;
+  max-width: 1200px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
   color: #333;
-  min-height: 650px;
-
-  overflow-y: auto;
+  min-height: 800px;
   position: relative;
-`;
+  box-sizing: border-box;
 
+  ${media.mobile`
+    padding: 10px;
+  `}
+`;
 const ListItem = styled.div`
-  width: calc(50.33% - 20px);
+  width: calc(50% - 20px);
   position: relative;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  max-width: 400px;
+  max-width: 500px;
+  min-width: 230px;
   margin: 20px 10px 0;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 12px;
-`;
 
+  ${media.tablet`
+
+    width: calc(50% - 10px);
+    max-width: 100%;
+  `}
+
+  ${media.mobile`
+
+    width: calc(70% - 20px);
+  `}
+`;
 const Image = styled.img`
   width: 24%;
   max-width: 100%;
@@ -117,14 +185,6 @@ const TextContainer = styled.div`
   padding-left: 20px;
 `;
 
-const FrontendText = styled.h1`
-  font-size: 3rem;
-  color: #333;
-  position: absolute;
-  top: -140px;
-  left: -23px;
-  margin: 50px 0 0 50px;
-`;
 const SubTitle = styled.h3`
   font-size: 0.8rem;
   margin-top: 8px;
@@ -134,11 +194,34 @@ const SubTitle = styled.h3`
   width: fit-content;
   padding: 2px 5px;
   border-radius: 15px;
+  @media (max-width: 1220px) {
+    font-size: 0.7rem;
+  }
+  ${media.tablet`
+  font-size:0.6rem;
+
+  `}
+
+  ${media.mobile`
+  font-size:0.6rem;
+  `}
 `;
 
 const Title = styled.h2`
   margin-top: 8px;
   font-size: 0.9rem;
+
+  @media (max-width: 1220px) {
+    font-size: 0.7rem;
+  }
+  ${media.tablet`
+  font-size:0.7rem;
+
+  `}
+
+  ${media.mobile`
+  font-size:0.7rem;
+  `}
 `;
 
 const Gauge = styled.div<{ percentage: number }>`
@@ -158,12 +241,34 @@ const Gauge = styled.div<{ percentage: number }>`
     background-color: #0553dd;
     animation: ${({ percentage }) => gaugeAnimation(percentage)} 1s ease-in-out;
   }
+  @media (max-width: 1220px) {
+    width: 100%;
+    height: 9px;
+  }
+  ${media.tablet`
+  width: 100%;
+  height: 7px;
+
+  `}
+
+  ${media.mobile`
+  width: 100%;
+  height: 7px;
+  `}
 `;
 const PaginationContainer = styled.div`
   position: absolute;
+  bottom: -7%;
+  right: 3%;
   justify-content: flex-end;
-  margin-top: 650px;
-  margin-left: 770px;
+  ${media.tablet`
+  bottom:-6%;
+  `}
+
+  ${media.mobile`
+  display:none;
+  bottom:20%;
+  `}
 `;
 const PageButton = styled.button`
   padding: 8.5px 11px;
@@ -275,9 +380,9 @@ function Skills() {
 
   return (
     <>
-      <MainContainer>
-        <Wrapper>
-          <FrontendText>FE/SKills</FrontendText>
+      <Wrapper>
+        <TitleForm titleName="Skills" />
+        <Container>
           <Sidebar>
             <ul>
               {categories.map((category) => (
@@ -339,8 +444,8 @@ function Skills() {
               <RightArrow onClick={handleNextPage}>˃</RightArrow>
             </PaginationContainer>
           </ContentContainer>
-        </Wrapper>
-      </MainContainer>
+        </Container>
+      </Wrapper>
     </>
   );
 }

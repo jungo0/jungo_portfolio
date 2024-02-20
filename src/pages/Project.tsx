@@ -15,6 +15,7 @@ import media from "../styles/media";
 
 const Container = styled(motion.section)`
   height: auto;
+  background-color: #f9f6f0;
   padding: 6rem 9rem 6rem 9rem;
   .button {
     text-align: right;
@@ -33,14 +34,14 @@ const ContentBox = styled(motion.div)<{ shape: boolean }>`
   ${(props) =>
     props.shape
       ? css`
-          grid-template-columns: repeat(3, 1fr);
-          &:nth-child(n + 3) {
+          grid-template-columns: repeat(5, 1fr);
+          &:nth-child(n + 6) {
             grid-column: span 3;
           }
         `
       : css`
-          grid-template-columns: repeat(5, 1fr);
-          &:nth-child(n + 6) {
+          grid-template-columns: repeat(3, 1fr);
+          &:nth-child(n + 3) {
             grid-column: span 3;
           }
         `}
@@ -97,7 +98,8 @@ const ProjectBox = styled(motion.div)`
     border-radius: 50%;
     text-transform: capitalize;
     top: 50%;
-    width: 0;
+    left: 50%;
+    margin-top: 5px;
     height: 0;
     line-height: 1;
     padding-left: 20px;
@@ -105,7 +107,7 @@ const ProjectBox = styled(motion.div)`
     font-size: 1rem;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: 0.3s;
+    transition: 0.5s;
     opacity: 0;
   }
 
@@ -120,7 +122,7 @@ const ProjectBox = styled(motion.div)`
     left: 50%;
     transform: translateX(-50%);
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.5s;
   }
 
   &:hover::before {
@@ -154,7 +156,7 @@ const ProjectBox = styled(motion.div)`
     opacity: 1;
   }
   &:hover .arrowIcon {
-    transform: scale(1.1);
+    transform: scale(1.2);
   }
 `;
 
@@ -189,20 +191,6 @@ function Project() {
         console.error("프로젝트 불러오기 에러:", error);
       });
   }, []);
-
-  useEffect(() => {
-    const bodyStyle = document.body.style;
-    if (isModalOpen) {
-      bodyStyle.overflow = "hidden";
-    } else {
-      bodyStyle.overflow = "auto";
-    }
-    return () => {
-      if (!isModalOpen) {
-        bodyStyle.overflow = "auto";
-      }
-    };
-  }, [isModalOpen]);
 
   return (
     <Container id="projects-section">

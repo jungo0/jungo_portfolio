@@ -25,7 +25,9 @@ const HeaderNavi = styled.header<HeaderProps>`
   top: -2%;
   margin-top: -9px;
   background-color: white;
-  box-shadow: ${(props) => (props.isScrolled ? "0 2px  #505050" : "none")};
+  &.scrolled {
+    box-shadow: 0 2px #505050;
+  }
   border-bottom: ${(props) =>
     props.isScrolled ? "1px solid #292726" : "none"};
   left: 0;
@@ -42,7 +44,7 @@ const HeaderNavi = styled.header<HeaderProps>`
       : "26px 0px 0px 0px"};
   height: ${(props) => (props.isMobileMenuOpen ? "100vh" : "auto")};
   transition: background-color 0.2s, box-shadow 0.2s, padding 0.2s, height 0.3s;
-`;
+` as any;
 
 const Logo = styled.div<{ isScrolled: boolean }>`
   font-size: 35px;
@@ -349,7 +351,11 @@ function Header() {
   return (
     <>
       {!isMobileMenuOpen && (
-        <HeaderNavi isScrolled={isScrolled} isMobileMenuOpen={isMobileMenuOpen}>
+        <HeaderNavi
+          className={isScrolled ? "scrolled" : ""}
+          isScrolled={isScrolled}
+          isMobileMenuOpen={isMobileMenuOpen}
+        >
           <Logo isScrolled={isScrolled}>
             <Link to="/">Jungo's</Link>
           </Logo>
