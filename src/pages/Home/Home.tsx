@@ -207,6 +207,7 @@ function Home() {
   return (
     <HomeContainer id="home-section">
       <Wrapper variants={showHide} initial="start" animate="end">
+        <h1 style={{ display: "none" }}>Home Section</h1>
         <CloudContainer
           style={{ top: "3%", left: "50%", opacity: "0.8" }}
           initial={{ y: 20 }}

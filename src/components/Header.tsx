@@ -362,10 +362,6 @@ function Header() {
     };
   }, [isMobileMenuOpen, handleResize]);
 
-  useEffect(() => {
-    handleResize();
-  }, []);
-
   return (
     <>
       {!isMobileMenuOpen && (

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import TitleForm from "../components/project/Title";
 import background from "../img/profile.jpg";
 import { IoMdMail } from "react-icons/io";
@@ -144,10 +144,9 @@ function Etc() {
     name: "",
     message: "",
   });
-  const [loading, setLoading] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [isFormDisplayed, setIsFormDisplayed] = useState(false);
-  const [isPreviewMode, setIsPreviewMode] = useState(false);
+  const [, setIsPreviewMode] = useState(false);
   const handleFocus = (e: {
     target: { placeholder: string; style: { color: string } };
   }) => {
@@ -186,7 +185,6 @@ function Etc() {
 
   const handleConfirmPopup = async () => {
     try {
-      setLoading(true);
       setIsPreviewMode(false);
       const serviceId = "service_jsyjtyf";
       const templateId = "template_op9g22e";
@@ -202,8 +200,6 @@ function Etc() {
       setShowPopup(true);
     } catch (error) {
       console.error("Error sending email:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -218,8 +214,6 @@ function Etc() {
     const templateId = "template_op9g22e";
 
     try {
-      setLoading(true);
-
       await emailjs.sendForm(
         serviceId,
         templateId,
@@ -230,8 +224,6 @@ function Etc() {
       setShowPopup(true);
     } catch (error) {
       console.error("Error sending email:", error);
-    } finally {
-      setLoading(false);
     }
   };
 

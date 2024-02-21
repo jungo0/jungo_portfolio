@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import {
   basicSkills,
@@ -25,10 +25,7 @@ const TitleText = styled.div`
     margin-bottom: 20px;
   }
 
-  h1 {
-    color: #333;
-    position: relative;
-  }
+  h1,
   h2 {
     color: #333;
     position: relative;
@@ -41,11 +38,11 @@ const TitleText = styled.div`
   }
 `;
 
-interface titleText {
+interface TitleTextProps {
   titleName: string;
 }
 
-function TitleForm(props: titleText) {
+function TitleForm(props: TitleTextProps) {
   return (
     <TitleText>
       <img src={left_text} alt="Left Text" />
@@ -58,6 +55,7 @@ function TitleForm(props: titleText) {
 interface StyledLiProps {
   isSelected: boolean;
 }
+
 const StyledLi = styled.li<StyledLiProps>`
   margin-bottom: 12px;
   cursor: pointer;
@@ -100,10 +98,12 @@ const IndicatorCircle = styled.div<{ isSelected?: boolean }>`
   opacity: ${({ isSelected }) => (isSelected ? 0.8 : 0)};
   transition: opacity 0.3s ease-in-out;
 `;
+
 const Container = styled.div`
   display: flex;
   height: auto;
 `;
+
 const Sidebar = styled.aside`
   display: flex;
   max-width: 700px;
@@ -118,21 +118,25 @@ const Sidebar = styled.aside`
     margin-bottom: 20px;
     list-style: none;
   }
+
   @media (max-width: 1220px) {
     font-size: 1.3rem;
     flex: 0 0 10%;
   }
+
   ${media.mobile`
-  display:none;
-  font-size:0.2rem;
-  display:none;
-  padding: 10px;
+    display:none;
+    font-size:0.2rem;
+    display:none;
+    padding: 10px;
   `}
+
   ${media.tablet`
-  flex: 0 0 10%;
-  bottom:-6%;
+    flex: 0 0 10%;
+    bottom:-6%;
   `}
 `;
+
 const ContentContainer = styled.section`
   flex: 1;
   box-sizing: border-box;
@@ -148,10 +152,12 @@ const ContentContainer = styled.section`
   position: relative;
   box-sizing: border-box;
   padding-left: 6%;
+
   ${media.mobile`
     padding: 10px;
   `}
 `;
+
 const ListItem = styled.div`
   width: calc(50% - 20px);
   position: relative;
@@ -169,16 +175,15 @@ const ListItem = styled.div`
   padding: 12px;
 
   ${media.tablet`
-
     width: calc(50% - 10px);
     max-width: 100%;
   `}
 
   ${media.mobile`
-
     width: calc(70% - 20px);
   `}
 `;
+
 const Image = styled.img`
   width: 24%;
   max-width: 100%;
@@ -200,16 +205,17 @@ const SubTitle = styled.h3`
   width: fit-content;
   padding: 2.5px 9px;
   border-radius: 15px;
+
   @media (max-width: 1220px) {
     font-size: 0.7rem;
   }
-  ${media.tablet`
-  font-size:0.6rem;
 
+  ${media.tablet`
+    font-size:0.6rem;
   `}
 
   ${media.mobile`
-  font-size:0.6rem;
+    font-size:0.6rem;
   `}
 `;
 
@@ -220,13 +226,13 @@ const Title = styled.h2`
   @media (max-width: 1220px) {
     font-size: 0.7rem;
   }
-  ${media.tablet`
-  font-size:0.7rem;
 
+  ${media.tablet`
+    font-size:0.7rem;
   `}
 
   ${media.mobile`
-  font-size:0.7rem;
+    font-size:0.7rem;
   `}
 `;
 
@@ -247,35 +253,39 @@ const Gauge = styled.div<{ percentage: number }>`
     background-color: #747264;
     animation: ${({ percentage }) => gaugeAnimation(percentage)} 1s ease-in-out;
   }
+
   @media (max-width: 1220px) {
     width: 100%;
     height: 9px;
   }
-  ${media.tablet`
-  width: 100%;
-  height: 7px;
 
+  ${media.tablet`
+    width: 100%;
+    height: 7px;
   `}
 
   ${media.mobile`
-  width: 100%;
-  height: 7px;
+    width: 100%;
+    height: 7px;
   `}
 `;
+
 const PaginationContainer = styled.div`
   position: absolute;
   bottom: -7%;
   right: 3%;
   justify-content: flex-end;
+
   ${media.tablet`
-  bottom:-6%;
+    bottom:-6%;
   `}
 
   ${media.mobile`
-  display:none;
-  bottom:20%;
+    display:none;
+    bottom:20%;
   `}
 `;
+
 const PageButton = styled.button`
   padding: 8.5px 12px;
   background-color: white;
@@ -319,7 +329,7 @@ function Skills() {
   const [selectedCategory, setSelectedCategory] = useState<
     "Basic" | "Library" | "DataBase" | "Others"
   >(categories[0]);
-  const [currentPercentage, setCurrentPercentage] = useState(0);
+  const [, setCurrentPercentage] = useState(0);
   const [key, setKey] = useState(0);
   const totalItems =
     selectedCategory === "Basic"
@@ -331,19 +341,20 @@ function Skills() {
       : Object.keys(othersSkills).length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const handlePageChange = (page: React.SetStateAction<number>) => {
+  const handlePageChange = useCallback((page: number) => {
     setCurrentPage(page);
-  };
+  }, []);
 
-  const handleCategoryClick = (
-    category: "Basic" | "Library" | "DataBase" | "Others"
-  ) => {
-    setSelectedCategory(category);
-    setCurrentPage(1);
-    setKey((prevKey) => prevKey + 1);
-  };
+  const handleCategoryClick = useCallback(
+    (category: "Basic" | "Library" | "DataBase" | "Others") => {
+      setSelectedCategory(category);
+      setCurrentPage(1);
+      setKey((prevKey) => prevKey + 1);
+    },
+    []
+  );
 
-  const getCategorySkills = () => {
+  const getCategorySkills = useCallback(() => {
     switch (selectedCategory) {
       case "Basic":
         return basicSkills as Record<string, any>;
@@ -356,7 +367,7 @@ function Skills() {
       default:
         return {} as Record<string, any>;
     }
-  };
+  }, [selectedCategory]);
 
   const paginatedData = Array.from(
     { length: totalItems },
@@ -374,15 +385,15 @@ function Skills() {
     }, 200);
 
     return () => clearTimeout(timeoutId);
-  }, [selectedCategory, currentPage]);
+  }, [selectedCategory, currentPage, getCategorySkills]);
 
-  const handlePrevPage = () => {
+  const handlePrevPage = useCallback(() => {
     setCurrentPage((prevPage) => Math.max(1, prevPage - 1));
-  };
+  }, []);
 
-  const handleNextPage = () => {
+  const handleNextPage = useCallback(() => {
     setCurrentPage((prevPage) => Math.min(totalPages, prevPage + 1));
-  };
+  }, [totalPages]);
 
   return (
     <>

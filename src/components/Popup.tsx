@@ -8,11 +8,6 @@ interface PopupProps {
 const Popup: React.FC<PopupProps> = ({ onCancel, onConfirm }) => {
   const [confirmationShown, setConfirmationShown] = useState(false);
 
-  const handleConfirm = () => {
-    onConfirm(); // confirm 함수 실행
-    setConfirmationShown(false); // 팝업 닫기
-  };
-
   const handleCancelPopup = () => {
     onCancel();
     setConfirmationShown(false);
