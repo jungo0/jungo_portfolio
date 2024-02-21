@@ -32,11 +32,15 @@ const Tag = styled.div`
   flex-wrap: nowrap;
   margin-left: -30px;
   padding-left: 380px;
+  font-family: "GmarketSansTTFMedium";
   font-size: 0.74rem;
   white-space: nowrap;
   margin-bottom: 15px;
   div {
     margin-left: auto;
+  }
+  @media (max-width: 1100px) {
+    font-size: 0.64rem;
   }
   ${media.mobile`
       display:none;
@@ -56,6 +60,7 @@ const Container = styled(motion.div)`
   position: fixed;
   top: 53%;
   width: 60%;
+  font-family: "Pretendard_Regular";
   height: 64%;
   max-width: 770px;
   min-width: 625px;
@@ -192,12 +197,14 @@ const ButtonContainer = styled.div`
   justify-content: flex-end;
   margin-top: 2%;
   padding: 0 2%;
+
   gap: 3%;
 `;
 const StyledButton = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
+
   text-align: center;
   cursor: pointer;
   height: 40px;
@@ -308,141 +315,148 @@ function Modal() {
     <AnimatePresence>
       {id ? (
         <>
-          <Container
-            variants={modalBackGround}
-            initial={isModalOpen ? "start" : "init"}
-            animate="start"
-            exit="end"
-          >
-            {DB.filter((ele: ProjectProps) => ele.id === id).map(
-              (ele: ProjectProps) => (
-                <Contents
-                  variants={modalForm}
-                  initial="init"
-                  animate="start"
-                  exit="end"
-                  key={ele.id}
-                  layoutId={id}
-                >
-                  <Tag>
-                    {ele.tag.map((tag, index) => (
-                      <div key={index}>
-                        <div>{tag}</div>
+          {" "}
+          <Overlay>
+            <Container
+              variants={modalBackGround}
+              initial={isModalOpen ? "start" : "init"}
+              animate="start"
+              exit="end"
+            >
+              {DB.filter((ele: ProjectProps) => ele.id === id).map(
+                (ele: ProjectProps) => (
+                  <Contents
+                    variants={modalForm}
+                    initial="init"
+                    animate="start"
+                    exit="end"
+                    key={ele.id}
+                    layoutId={id}
+                  >
+                    <Tag>
+                      {ele.tag.map((tag, index) => (
+                        <div key={index}>
+                          <div>{tag}</div>
+                        </div>
+                      ))}
+                    </Tag>
+                    <div className="image">
+                      <img
+                        src={require(`../img/${ele.img}.png`)}
+                        alt={`${ele.img}`}
+                      />
+                    </div>
+                    <div className="text">
+                      <div>
+                        <h3>{ele.name}</h3>
                       </div>
-                    ))}
-                  </Tag>
-                  <div className="image">
-                    <img
-                      src={require(`../img/${ele.img}.png`)}
-                      alt={`${ele.img}`}
-                    />
-                  </div>
-                  <div className="text">
-                    <div>
-                      <h3>{ele.name}</h3>
-                    </div>
-                    <div>
-                      <h5 className="subtitle">
-                        <b>
-                          <BiSolidCategoryAlt style={{ paddingTop: "3.5px" }} />
-                        </b>{" "}
-                        Description
-                      </h5>
-                      <p className="description">{ele.text}</p>
-                    </div>
-
-                    <div className="progress-part-container">
                       <div>
                         <h5 className="subtitle">
                           <b>
-                            <BsFillPeopleFill
-                              style={{
-                                paddingTop: "4px",
-                                fontSize: "1.16rem",
-                              }}
+                            <BiSolidCategoryAlt
+                              style={{ paddingTop: "3.5px" }}
                             />
                           </b>{" "}
-                          Progress
-                        </h5>{" "}
-                        <p>
-                          {ele.progress.map((progress, index) => (
-                            <li
-                              key={index}
-                              style={{ color: "  rgb(1, 1, 1, 0.7)" }}
-                            >
-                              {" "}
-                              {progress}
-                            </li>
-                          ))}
-                        </p>
-                      </div>
-
-                      <div>
-                        <h5 className="subtitle">
-                          <b>
-                            <BiReceipt
-                              style={{
-                                paddingTop: "3.8px",
-                                fontSize: "1.16rem",
-                              }}
-                            />
-                          </b>{" "}
-                          Part
+                          Description
                         </h5>
-                        <p>
-                          {ele.part.map((part, index) => (
+                        <p className="description">{ele.text}</p>
+                      </div>
+
+                      <div className="progress-part-container">
+                        <div>
+                          <h5 className="subtitle">
+                            <b>
+                              <BsFillPeopleFill
+                                style={{
+                                  paddingTop: "4px",
+                                  fontSize: "1.16rem",
+                                }}
+                              />
+                            </b>{" "}
+                            Progress
+                          </h5>{" "}
+                          <p>
+                            {ele.progress.map((progress, index) => (
+                              <li
+                                key={index}
+                                style={{ color: "  rgb(1, 1, 1, 0.7)" }}
+                              >
+                                {" "}
+                                {progress}
+                              </li>
+                            ))}
+                          </p>
+                        </div>
+
+                        <div>
+                          <h5 className="subtitle">
+                            <b>
+                              <BiReceipt
+                                style={{
+                                  paddingTop: "3.8px",
+                                  fontSize: "1.16rem",
+                                }}
+                              />
+                            </b>{" "}
+                            Part
+                          </h5>
+                          <p>
+                            {ele.part.map((part, index) => (
+                              <li
+                                key={index}
+                                style={{ color: "  rgb(1, 1, 1, 0.7)" }}
+                              >
+                                {part}
+                              </li>
+                            ))}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h5 className="subtitle">
+                          <b>
+                            <FaTools style={{ paddingTop: "3.8px" }} />
+                          </b>{" "}
+                          Use Skill
+                        </h5>
+                        <ul className="skillList">
+                          {ele.skill.map((ele, index) => (
                             <li
                               key={index}
-                              style={{ color: "  rgb(1, 1, 1, 0.7)" }}
+                              style={{ display: "flex", alignItems: "center" }}
                             >
-                              {part}
+                              <FaRegCheckCircle
+                                style={{ marginRight: "5px" }}
+                              />{" "}
+                              {ele}
                             </li>
                           ))}
-                        </p>
+                        </ul>
+                      </div>
+                      <div className="button-container">
+                        <ButtonContainer>
+                          <Button
+                            label="Site"
+                            href={ele.gitLink}
+                            icon={undefined}
+                          />
+                          <Button
+                            label="GitHub"
+                            href={ele.gitCode}
+                            icon={undefined}
+                          />
+                        </ButtonContainer>
                       </div>
                     </div>
-
-                    <div>
-                      <h5 className="subtitle">
-                        <b>
-                          <FaTools style={{ paddingTop: "3.8px" }} />
-                        </b>{" "}
-                        Use Skill
-                      </h5>
-                      <ul className="skillList">
-                        {ele.skill.map((ele, index) => (
-                          <li
-                            key={index}
-                            style={{ display: "flex", alignItems: "center" }}
-                          >
-                            <FaRegCheckCircle style={{ marginRight: "5px" }} />{" "}
-                            {ele}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="button-container">
-                      <ButtonContainer>
-                        <Button
-                          label="Site"
-                          href={ele.gitLink}
-                          icon={undefined}
-                        />
-                        <Button
-                          label="GitHub"
-                          href={ele.gitCode}
-                          icon={undefined}
-                        />
-                      </ButtonContainer>
-                    </div>
-                  </div>
-                </Contents>
-              )
-            )}
-            <Close onClick={hidden}>
-              <IoClose />
-            </Close>
-          </Container>
+                  </Contents>
+                )
+              )}
+              <Close onClick={hidden}>
+                <IoClose />
+              </Close>
+            </Container>
+          </Overlay>
         </>
       ) : null}
     </AnimatePresence>

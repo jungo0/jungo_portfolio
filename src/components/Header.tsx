@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
-import { FaSquareGithub } from "react-icons/fa6";
+import { FaGithub } from "react-icons/fa6";
 import { SiVelog } from "react-icons/si";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { FaArrowCircleRight } from "react-icons/fa";
@@ -21,17 +21,18 @@ const fadeIn = keyframes`
 
 const HeaderNavi = styled.header<HeaderProps>`
   position: fixed;
+  font-family: GmarketSansTTFMedium;
   width: 100%;
-  top: -2%;
-  margin-top: -9px;
-  background-color: white;
+  top: -3%;
+  background-color: #ffffff;
   &.scrolled {
-    box-shadow: 0 2px #505050;
+    box-shadow: 0 1.5px #505050;
   }
   border-bottom: ${(props) =>
-    props.isScrolled ? "1px solid #292726" : "none"};
+    props.isScrolled ? "1.5px solid #1C1917" : "none"};
   left: 0;
   right: 0;
+  margin: 0 auto;
   z-index: 10;
   display: flex;
   justify-content: space-between;
@@ -39,25 +40,27 @@ const HeaderNavi = styled.header<HeaderProps>`
   padding: ${(props) =>
     props.isScrolled
       ? props.isMobileMenuOpen
-        ? "15px 0px 0px 0px"
-        : "15px 0px 0px 0px"
-      : "26px 0px 0px 0px"};
+        ? "30px 0px 5px 0px"
+        : "30px 0px 5px 0px"
+      : "40px 0px 5px 0px"};
   height: ${(props) => (props.isMobileMenuOpen ? "100vh" : "auto")};
   transition: background-color 0.2s, box-shadow 0.2s, padding 0.2s, height 0.3s;
 ` as any;
 
 const Logo = styled.div<{ isScrolled: boolean }>`
-  font-size: 35px;
+  font-size: 28px;
   font-weight: bold;
   margin-left: 60px;
+  opacity: 0.8;
   transition: font-size 0.3s;
   margin-top: -6px;
+  font-family: GmarketSansTTFMedium;
 
   ${(props) =>
     props.isScrolled &&
     css`
       margin-top: 10px;
-      font-size: 30px;
+      font-size: 25px;
     `}
 `;
 const Menu = styled.div<{
@@ -105,7 +108,8 @@ const Menu = styled.div<{
       position: relative;
 
       &:hover {
-        color: #3c67de;
+        color: #12372a;
+        opacity: 0.8;
       }
     }
   }
@@ -136,11 +140,13 @@ const Buttons = styled.div<{ isScrolled: boolean }>`
   align-items: flex-end;
   margin-top: ${(props) => (props.isScrolled ? "-5px" : "12px")};
   transition: margin-top 0.3s ease;
-
+  margin-right: 12px;
+  margin-left: 12px;
+  margin-bottom: 8px;
   &::before {
     content: "About Me";
-    font-size: 14px;
-    margin-bottom: 7px;
+    font-size: 13px;
+    margin-bottom: 12px;
     color: #3e3e3e;
     font-weight: bold;
     opacity: ${(props) => (props.isScrolled ? 0 : 1)};
@@ -154,20 +160,21 @@ const ButtonsContainer = styled.div`
 `;
 
 const Button = styled.button`
-  color: RGB(41, 41, 41);
-  background-color: #d4d8d9;
+  color: RGB(60, 54, 51);
+  background-color: rgba(1, 1, 1, 0.1);
   cursor: pointer;
   font-size: 15px;
   border: 0px solid #fff;
   border-radius: 5px;
   padding: 4px 5.5px;
-  margin-right: 7px;
-  margin-bottom: -2.5px;
+  margin-right: 8px;
+  margin-bottom: -3.5px;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s,
     transform 0.3s;
 
   &:hover {
-    background-color: #3c67de;
+    background-color: #12372a;
+    opacity: 0.7;
     color: #fff;
     border-color: #fff;
     transform: translateY(-1px);
@@ -183,8 +190,8 @@ const HamburgerMenu = styled(RxHamburgerMenu)<{ isScrolled: boolean }>`
     cursor: pointer;
     text-align: center;
     margin-right: 30px;
-    margin-bottom: ${(props) => (props.isScrolled ? "8px" : "22px")};
-    margin-top: ${(props) => (props.isScrolled ? "24px" : "26px")};
+    margin-bottom: ${(props) => (props.isScrolled ? "12px" : "22px")};
+    margin-top: ${(props) => (props.isScrolled ? "28px" : "26px")};
     color: #3e3e3e;
     font-weight: 200;
     opacity: 1;
@@ -224,7 +231,7 @@ const MobileMenu = styled.div<{ isOpen: boolean }>`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #2454d9;
+  background-color: #436850;
   z-index: 10;
   animation: ${fadeIn} 0.5s ease;
 `;
@@ -269,7 +276,7 @@ const RedButton = styled.button`
   margin-left: 40%;
 
   &:hover {
-    background-color: #cc0000;
+    background-color: #e13500;
   }
 `;
 const ArrowIcon = styled(FaArrowCircleRight)`
@@ -357,7 +364,7 @@ function Header() {
           isMobileMenuOpen={isMobileMenuOpen}
         >
           <Logo isScrolled={isScrolled}>
-            <Link to="/">Jungo's</Link>
+            <Link to="/">minjeongho.</Link>
           </Logo>
           <Menu
             isScrolled={isScrolled}
@@ -407,7 +414,7 @@ function Header() {
             <Buttons isScrolled={isScrolled}>
               <ButtonsContainer>
                 <Button onClick={() => navigate("/git")}>
-                  <FaSquareGithub />
+                  <FaGithub />
                 </Button>
 
                 <Button onClick={() => navigate("/blog")}>

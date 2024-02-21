@@ -15,7 +15,7 @@ import arrow from "../img/arrow.png";
 const Container = styled(motion.section)`
   height: auto;
   background-color: #f9f6f0;
-  padding: 6rem 9rem 6rem 9rem;
+  padding: 6rem 9rem 4rem 9rem;
   .button {
     text-align: right;
     button {
@@ -25,55 +25,48 @@ const Container = styled(motion.section)`
       font-size: 22px;
     }
   }
+  @media (max-width: 768px) {
+    padding: 0;
+  }
+
+  @media (max-width: 1200px) {
+    padding: 4rem;
+  }
 `;
 const ContentBox = styled(motion.div)<{ shape: boolean }>`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-
+  max-width: 1500px;
+  margin: 0 auto;
   ${(props) =>
     props.shape
       ? css`
           grid-template-columns: repeat(5, 1fr);
+          gap: 1rem;
           &:nth-child(n + 6) {
             grid-column: span 3;
           }
         `
       : css`
           grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
           &:nth-child(n + 3) {
             grid-column: span 3;
           }
         `}
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-
-    ${(props) =>
-      props.shape
-        ? css`
-            grid-template-columns: repeat(2, 1fr);
-            &:nth-child(n + 3) {
-              grid-column: span 3;
-            }
-          `
-        : css`
-            grid-template-columns: repeat(3, 1fr);
-            &:nth-child(n + 6) {
-              grid-column: span 3;
-            }
-          `}
-  }
 `;
-
 const ProjectBox = styled(motion.div)`
   width: 80%;
   height: 80%;
+  max-width: 400px;
+  max-height: 400px;
   cursor: pointer;
   margin: 1rem;
   border-radius: 12px;
   border: 2px solid #1c1917;
   overflow: hidden;
   position: relative;
+  box-sizing: border-box;
 
   .imgBox {
     width: 100%;

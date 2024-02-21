@@ -1,0 +1,35 @@
+@font-face {
+  font-family: "GmarketSansTTFMedium";
+  src: url("./GmarketSansTTFMedium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "GmarketSansTTFLight";
+  src: url("./GmarketSansTTFLight.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "GmarketSansTTFBold";
+  src: url("./GmarketSansTTFBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Pretendard_ExtraBold";
+  src: url("./Pretendard-ExtraBold.otf") format("truetype");
+}
+@font-face {
+  font-family: "Pretendard_Medium";
+  src: url("./Pretendard-Medium.otf") format("truetype");
+}
+@font-face {
+  font-family: "Pretendard_Regular";
+  src: url("./Pretendard-Regular.otf") format("truetype");
+}
+@font-face {
+  font-family: "Pretendard_Bold";
+  src: url("./Pretendard-Bold.otf") format("truetype");
+}
+@font-face {
+  font-family: "Pretendard_SemiBold";
+  src: url("./Pretendard-SemiBold.otf") format("truetype");
+}

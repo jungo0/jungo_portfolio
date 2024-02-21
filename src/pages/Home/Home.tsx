@@ -8,13 +8,29 @@ import { motion } from "framer-motion";
 import { showHide, showHideChild } from "../../keyframe/keyFrame";
 import { useInterval } from "../../hooks/setInterVal";
 import background from "../../img/background1.png";
-import { GlobalStyle } from "../../styles/theme";
+import "../../styles/font.css";
+import cloud1 from "../../img/cloud1.png";
+import cloud2 from "../../img/cloud2.png";
+
+export const CloudContainer = styled(motion.div)`
+  margin-left: -20px;
+  position: absolute;
+  @media (max-width: 768px) {
+    margin-left: 120px;
+    margin-top: 30px;
+  }
+`;
+
+export const CloudImage = styled.img`
+  width: 50%;
+  height: auto;
+`;
 
 const HomeContainer = styled.section`
-  padding-top: 100px;
+  padding-top: 13rem;
   position: relative;
-  padding-bottom: 200px;
-  height: 72vh;
+  padding-bottom: 100px;
+  height: auto;
   background-image: url(${background});
   background-size: cover;
   background-position: center;
@@ -26,8 +42,9 @@ const HomeContainer = styled.section`
 `;
 
 const Wrapper = styled(motion.div)`
+  gap: 0 85px;
   display: flex;
-  width: 55%;
+  width: 70%;
   position: relative;
   min-width: 300px;
   max-width: 1100px;
@@ -39,18 +56,7 @@ const Wrapper = styled(motion.div)`
   color: #1c1917;
   text-align: center;
   scroll-snap-align: start;
-  .name {
-    font-size: 4.1rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    color: ${(props) => props.theme.textColor};
-  }
-  .line {
-    display: inline-block;
-    width: 4.375rem;
-    height: 0.313rem;
-    background-color: ${(props) => props.theme.bgColor};
-  }
+
   @media (max-width: 768px) {
     flex-direction: column;
   }
@@ -161,10 +167,10 @@ const ButtonText = styled.span`
 function Home() {
   const divtag = useRef<HTMLDivElement>(null);
   let arrIndex = 0;
-  const WORD_TYPING_SPEED = 1000;
-  const msgArr = ["Creative", "Developer", "good"];
+  const WORD_TYPING_SPEED = 1400;
+  const msgArr = ["Creative", "Proactive", "Adaptable"];
 
-  const [scrollOffset, setScrollOffset] = useState(-560);
+  const [scrollOffset, setScrollOffset] = useState(-360);
 
   const onChangeMsg = () => {
     if (divtag.current) {
@@ -200,13 +206,33 @@ function Home() {
   }, []);
   return (
     <HomeContainer id="home-section">
-      <GlobalStyle />
       <Wrapper variants={showHide} initial="start" animate="end">
+        <CloudContainer
+          style={{ top: "3%", left: "50%", opacity: "0.8" }}
+          initial={{ y: 20 }}
+          animate={{
+            y: [20, 7, 20],
+          }}
+          transition={{ duration: 5, repeat: Infinity, repeatType: "reverse" }}
+        >
+          <CloudImage src={cloud1} alt="Cloud1" />
+        </CloudContainer>
+        <CloudContainer
+          style={{ top: "20px", left: "40%", opacity: "0.8" }}
+          initial={{ y: 40 }}
+          animate={{
+            y: [40, 55, 40],
+          }}
+          transition={{ duration: 5, repeat: Infinity }}
+        >
+          <CloudImage src={cloud2} alt="Cloud2" />
+        </CloudContainer>
         <TextBox>
           <h1
             style={{
               fontSize: "1.5rem",
               marginBottom: "20px",
+              fontFamily: "GmarketSansMedium",
               textAlign: "left",
             }}
           ></h1>{" "}
@@ -216,12 +242,13 @@ function Home() {
               alt="List Icon"
               style={{
                 marginRight: "12px",
+                color: "rgba(1,1,1,0.8)",
                 marginTop: "7px",
                 width: "15px",
                 height: "15px",
               }}
             />
-            Creative
+            Developer
             <div className="textanibox" ref={divtag}>
               {msgArr.map((m, i) => (
                 <div className="isHidden" key={i}>
@@ -233,21 +260,21 @@ function Home() {
           <h2
             style={{
               fontSize: "2rem",
-              marginBottom: "40px",
-              fontWeight: 100,
+              fontFamily: "GmarketSansTTFLight",
+              marginBottom: "30px",
               textAlign: "left",
-              color: "#1C1917",
+              color: "rgba(1, 1, 1,0.8)",
+              fontStyle: "thin",
             }}
-          >
-            안녕하세요
-          </h2>
+          ></h2>
           <h2
             style={{
               fontSize: "2rem",
-              marginBottom: "10px",
-              fontWeight: 700,
+              marginBottom: "20px",
+              fontWeight: 1000,
+              fontFamily: "GmarketSansTTFMedium",
               textAlign: "left",
-              color: "#1D4ED8",
+              color: "#436850",
             }}
           >
             프론트엔드 개발자
@@ -256,30 +283,30 @@ function Home() {
             style={{
               fontSize: "3.5rem",
               marginBottom: "2.8rem",
-              fontWeight: 1000,
-              fontStyle: "bold",
+              fontFamily: "Pretendard_ExtraBold",
               textAlign: "left",
               whiteSpace: "nowrap",
-              color: "#212121",
+              color: "#3C3633",
             }}
           >
             민정호입니다.
           </h2>
           <p
             style={{
-              fontSize: "1.2rem",
+              fontSize: "1.1rem",
               textAlign: "left",
-              fontWeight: 100,
-              marginBottom: "4.5rem",
+              marginBottom: "7rem",
               maxWidth: "420px",
-              lineHeight: "1.2",
-              opacity: "0.9",
-              color: "#718096",
+              fontFamily: "Pretendard_Regular",
+              lineHeight: "1.34",
+              opacity: "0.6",
+              color: "#3C3633",
             }}
           >
-            안녕하세요. 공부가 취미인 풀 스택 웹 개발자입니다. 매우 꼼꼼한
-            성격,우 꼼꼼한 성격, 그리고 공부를 밥 먹듯이 하는 습관이 저의
-            장점입니다.우 꼼꼼한 성격,우 꼼꼼한 성격,
+            안녕하세요 소프트웨어학과를 졸업하고 <br />웹 프론트엔드를
+            중점적으로 공부했습니다. <br />
+            빠르게 변화하는 웹 기술 환경에서 사용자 친화적인
+            <br /> 인터페이스를 제공하고 싶습니다.
           </p>
           <Column>
             <ScrollLink
@@ -287,10 +314,17 @@ function Home() {
               spy={true}
               smooth={true}
               offset={scrollOffset}
-              duration={500}
+              duration={600}
             >
               <Button>
-                <ButtonText>더 알아보기</ButtonText>
+                <ButtonText
+                  style={{
+                    fontFamily: "GmarketSansTTFMedium",
+                    marginLeft: "10px",
+                  }}
+                >
+                  더 알아보기
+                </ButtonText>
                 <Icon />
               </Button>
             </ScrollLink>

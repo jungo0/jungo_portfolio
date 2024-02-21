@@ -16,6 +16,7 @@ const StyledInput = styled.input`
   padding-left: 20px;
   width: 100%;
   margin-bottom: 20px;
+  font-family: "GmarketSansTTFLight";
   border: 1.5px solid #bfbfbf;
   box-sizing: border-box;
   text-align: left;
@@ -29,6 +30,7 @@ const StyledInput = styled.input`
 `;
 const OuterContainer = styled(motion.section)`
   height: auto;
+  font-family: "GmarketSansTTFLight";
   background-color: #f9f6f0;
   padding: 6rem 9rem 2rem 9rem;
   justify-content: center;
@@ -318,14 +320,46 @@ function Etc() {
               >
                 아래와 같이 메일이 전송됩니다!
               </span>
-              <p>제목: {displayedForm.title}</p>
-              <p>이름: {displayedForm.name}</p>
+              <p style={{ fontFamily: "GmarketSansTTFMedium" }}>제목 </p>
               <p
                 style={{
-                  marginBottom: "10px",
+                  border: "1px solid #D0D5DD",
+                  padding: "6px 15px",
+                  fontSize: "1.2rem",
+                  marginBottom: "12px",
+                  borderRadius: "5px",
                 }}
               >
-                메세지:{displayedForm.message}
+                {" "}
+                {displayedForm.title}
+              </p>
+              <p style={{ fontFamily: "GmarketSansTTFMedium" }}>이름 </p>
+              <p
+                style={{
+                  border: "1px solid #D0D5DD",
+                  padding: "6px 15px",
+                  fontSize: "1.2rem",
+                  marginBottom: "12px",
+                  borderRadius: "5px",
+                }}
+              >
+                {" "}
+                {displayedForm.name}
+              </p>{" "}
+              <p style={{ fontFamily: "GmarketSansTTFMedium" }}>메세지</p>
+              <p
+                style={{
+                  border: "1px solid #D0D5DD",
+                  padding: "6px 15px",
+                  fontSize: "1.2rem",
+                  marginBottom: "5px",
+                  borderRadius: "5px",
+                }}
+              >
+                {displayedForm.message}
+              </p>
+              <p style={{ marginBottom: "20px", fontSize: "1rem" }}>
+                * Cancel 내용을 수정할 수 있습니다.{" "}
               </p>
               <button
                 type="submit"
@@ -355,7 +389,6 @@ function Etc() {
                 <span style={{ marginTop: "30px" }}>Send</span>{" "}
                 <IoMdSend style={{ paddingTop: "4px", paddingLeft: "3px" }} />
               </button>
-
               <button
                 type="submit"
                 onClick={() => {
@@ -385,7 +418,7 @@ function Etc() {
                   (e.currentTarget.style.backgroundColor = "white")
                 }
               >
-                <span style={{ marginTop: "30px" }}>Back</span>{" "}
+                <span style={{ marginTop: "30px" }}>Cancel</span>{" "}
                 <IoArrowBackCircle
                   style={{
                     paddingTop: "6px",

@@ -1,36 +1,37 @@
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
+import left_text from "../../img/left_text.png";
+import right_text from "../../img/right_text.png";
+
 const TitleText = styled.div`
   overflow: hidden;
-  font-size: 2.3rem;
-  margin-bottom: 0rem;
+  font-family: "GmarketSansTTFMedium";
+  font-size: 2rem;
   color: rgba(1, 1, 1, 0.7);
-  span {
-    display: inline-block;
-    padding-bottom: 0.5rem;
-    position: relative;
-    letter-spacing: 7px;
-    text-transform: uppercase;
-    font-weight: 700;
-    color: #333;
-    &::after {
-      content: "";
-      margin-left: 1.563rem;
-      position: absolute;
-      width: 5000px;
-      height: 1.2px;
-      background-color: #7d7789;
-      left: 100%;
-      top: 50%;
-      transform: translateY(-50%);
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    height: 25px;
+    margin: 0 25px;
+    margin-bottom: 20px;
   }
+
+  span {
+    display: flex;
+    align-items: center;
+    color: #333;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
   @media ${(props) => props.theme.mobile} {
     span {
       letter-spacing: 2px;
     }
   }
 `;
+
 interface titleText {
   titleName: string;
 }
@@ -38,8 +39,11 @@ interface titleText {
 function TitleForm(props: titleText) {
   return (
     <TitleText>
+      <img src={left_text} alt="Left Text" />
       <span>{props.titleName}</span>
+      <img src={right_text} alt="Right Text" />
     </TitleText>
   );
 }
+
 export default TitleForm;

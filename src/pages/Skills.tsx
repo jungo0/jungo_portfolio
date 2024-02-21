@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import {
   basicSkills,
   librarySkills,
@@ -8,40 +8,39 @@ import {
 } from "../etc/skillsdb";
 import { gaugeAnimation } from "../keyframe/keyFrame";
 import media from "../styles/media";
+import left_text from "../img/left_text.png";
+import right_text from "../img/right_text.png";
+
 const TitleText = styled.div`
-  overflow: hidden;
-  font-size: 2.3rem;
-  margin-bottom: 0rem;
+  font-family: "GmarketSansTTFMedium";
+  font-size: 2rem;
   color: rgba(1, 1, 1, 0.7);
-  span {
-    display: inline-block;
-    padding-bottom: 0.5rem;
-    position: relative;
-    letter-spacing: 7px;
-    text-transform: uppercase;
-    font-weight: 700;
-    color: #333;
-    &::after {
-      content: "";
-      margin-left: 1.563rem;
-      position: absolute;
-      width: 5000px;
-      height: 1.2px;
-      background-color: #7d7789;
-      left: 100%;
-      top: 50%;
-      transform: translateY(-50%);
-    }
+
+  display: flex;
+  justify-content: center;
+
+  img {
+    height: 25px;
+    margin: 0 25px;
+    margin-bottom: 20px;
   }
+
+  h1 {
+    color: #333;
+    position: relative;
+  }
+  h2 {
+    color: #333;
+    position: relative;
+  }
+
   @media ${(props) => props.theme.mobile} {
-    span {
+    p {
       letter-spacing: 2px;
     }
   }
 `;
-interface titleText {
-  titleName: string;
-}
+
 interface titleText {
   titleName: string;
 }
@@ -49,7 +48,9 @@ interface titleText {
 function TitleForm(props: titleText) {
   return (
     <TitleText>
-      <span>{props.titleName}</span>
+      <img src={left_text} alt="Left Text" />
+      <h1>{props.titleName}</h1>
+      <img src={right_text} alt="Right Text" />
     </TitleText>
   );
 }
@@ -58,7 +59,7 @@ interface StyledLiProps {
   isSelected: boolean;
 }
 const StyledLi = styled.li<StyledLiProps>`
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   cursor: pointer;
   position: relative;
   transition: color 0.3s ease-in-out;
@@ -80,7 +81,6 @@ const categories: ("Basic" | "Library" | "DataBase" | "Others")[] = [
 const Wrapper = styled.div`
   height: auto;
   background-color: #f9f6f0;
-  padding: 6rem 9rem 6rem 9rem;
 
   ${media.tablet`
     padding: 4rem;
@@ -93,10 +93,10 @@ const Wrapper = styled.div`
 
 const IndicatorCircle = styled.div<{ isSelected?: boolean }>`
   width: 120px;
-  margin-top: 11px;
+  margin-top: 12px;
   height: 6px;
   border-radius: 5px;
-  background-color: #0553dd;
+  background-color: #3c3633;
   opacity: ${({ isSelected }) => (isSelected ? 0.8 : 0)};
   transition: opacity 0.3s ease-in-out;
 `;
@@ -105,16 +105,17 @@ const Container = styled.div`
   height: auto;
 `;
 const Sidebar = styled.aside`
-  flex: 0 0 20%;
   display: flex;
+  max-width: 700px;
   font-size: 1.7rem;
   background-color: rgba(249, 246, 240, 0);
   color: #b6b8bc;
-  padding: 30px;
+  padding-left: 13%;
+  padding-top: 5%;
 
   ul {
     padding: 0px;
-    margin: 0;
+    margin-bottom: 20px;
     list-style: none;
   }
   @media (max-width: 1220px) {
@@ -136,8 +137,9 @@ const ContentContainer = styled.section`
   flex: 1;
   box-sizing: border-box;
   background-color: #f9f6f0;
-  max-width: 1200px;
+  max-width: 1480px;
   display: flex;
+  padding-top: 80px;
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
@@ -145,7 +147,7 @@ const ContentContainer = styled.section`
   min-height: 800px;
   position: relative;
   box-sizing: border-box;
-
+  padding-left: 6%;
   ${media.mobile`
     padding: 10px;
   `}
@@ -158,6 +160,8 @@ const ListItem = styled.div`
   align-items: center;
   max-width: 500px;
   min-width: 230px;
+  color: rgba(1, 1, 1, 0.7);
+  font-family: "Pretendard_Regular";
   margin: 20px 10px 0;
   background-color: white;
   border-radius: 10px;
@@ -186,13 +190,15 @@ const TextContainer = styled.div`
 `;
 
 const SubTitle = styled.h3`
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   margin-top: 8px;
+  margin-bottom: 8px;
   text-align: left;
+  font-family: "GmarketSansTTFMedium";
   background-color: white;
   border: 2px solid #ced5de;
   width: fit-content;
-  padding: 2px 5px;
+  padding: 2.5px 9px;
   border-radius: 15px;
   @media (max-width: 1220px) {
     font-size: 0.7rem;
@@ -238,7 +244,7 @@ const Gauge = styled.div<{ percentage: number }>`
     display: block;
     height: 100%;
     width: ${({ percentage }) => `${percentage}%`};
-    background-color: #0553dd;
+    background-color: #747264;
     animation: ${({ percentage }) => gaugeAnimation(percentage)} 1s ease-in-out;
   }
   @media (max-width: 1220px) {
@@ -271,7 +277,7 @@ const PaginationContainer = styled.div`
   `}
 `;
 const PageButton = styled.button`
-  padding: 8.5px 11px;
+  padding: 8.5px 12px;
   background-color: white;
   margin: 2px;
   color: #808080;
@@ -380,7 +386,7 @@ function Skills() {
 
   return (
     <>
-      <Wrapper>
+      <Wrapper id="skills-section">
         <TitleForm titleName="Skills" />
         <Container>
           <Sidebar>
@@ -397,7 +403,7 @@ function Skills() {
               ))}
             </ul>
           </Sidebar>
-          <ContentContainer id="skills-section">
+          <ContentContainer>
             {paginatedData.map((item) => (
               <ListItem key={item}>
                 <TextContainer>
@@ -433,7 +439,9 @@ function Skills() {
                     onClick={() => handlePageChange(page)}
                     style={{
                       backgroundColor:
-                        currentPage === page ? "RGB(77, 161, 248)" : "white",
+                        currentPage === page
+                          ? "rgba(67, 104, 80,0.8)"
+                          : "white",
                       color: currentPage === page ? "white" : "#828282",
                     }}
                   >
