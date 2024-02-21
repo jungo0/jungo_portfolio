@@ -207,7 +207,6 @@ function Home() {
   return (
     <HomeContainer id="home-section">
       <Wrapper variants={showHide} initial="start" animate="end">
-        <h1 style={{ display: "none" }}>Home Section</h1>
         <CloudContainer
           style={{ top: "3%", left: "50%", opacity: "0.8" }}
           initial={{ y: 20 }}
@@ -229,14 +228,6 @@ function Home() {
           <CloudImage src={cloud2} alt="Cloud2" />
         </CloudContainer>
         <TextBox>
-          <h1
-            style={{
-              fontSize: "1.5rem",
-              marginBottom: "20px",
-              fontFamily: "GmarketSansMedium",
-              textAlign: "left",
-            }}
-          ></h1>{" "}
           <Animation variants={showHideChild}>
             <img
               src={list_icon}
@@ -258,16 +249,6 @@ function Home() {
               ))}
             </div>
           </Animation>
-          <h2
-            style={{
-              fontSize: "2rem",
-              fontFamily: "GmarketSansTTFLight",
-              marginBottom: "30px",
-              textAlign: "left",
-              color: "rgba(1, 1, 1,0.8)",
-              fontStyle: "thin",
-            }}
-          ></h2>
           <h2
             style={{
               fontSize: "2rem",
