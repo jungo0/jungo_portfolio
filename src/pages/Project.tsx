@@ -33,13 +33,14 @@ const Container = styled(motion.section)`
     padding: 4rem;
   }
 `;
-const ContentBox = styled(motion.div)<{ shape: boolean }>`
+const ContentBox = styled(motion.div)<{ shape: string }>`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   max-width: 1500px;
   margin: 0 auto;
+
   ${(props) =>
-    props.shape
+    props.shape === "true"
       ? css`
           grid-template-columns: repeat(5, 1fr);
           gap: 1rem;
@@ -55,6 +56,7 @@ const ContentBox = styled(motion.div)<{ shape: boolean }>`
           }
         `}
 `;
+
 const ProjectBox = styled(motion.div)`
   width: 80%;
   height: 80%;
@@ -193,7 +195,7 @@ function Project() {
         </button>
       </div>
       {DB ? (
-        <ContentBox shape={shape}>
+        <ContentBox shape={shape.toString()}>
           {DB.map((element: ProjectProps) => (
             <ProjectBox
               key={element.name}

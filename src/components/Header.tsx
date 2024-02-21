@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import styled, { css, keyframes } from "styled-components";
+import styled, {
+  css,
+  DefaultTheme,
+  keyframes,
+  StyledComponent,
+} from "styled-components";
 import { FaGithub } from "react-icons/fa6";
 import { SiVelog } from "react-icons/si";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -9,7 +14,10 @@ interface HeaderProps {
   isScrolled: boolean;
   isMobileMenuOpen: boolean;
 }
-
+interface HamburgerMenuProps {
+  isscrolled?: boolean;
+  onClick: () => void;
+}
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -180,8 +188,11 @@ const Button = styled.button`
     transform: translateY(-1px);
   }
 `;
-
-const HamburgerMenu = styled(RxHamburgerMenu)<{ isScrolled: boolean }>`
+const HamburgerMenu: StyledComponent<
+  typeof RxHamburgerMenu,
+  DefaultTheme,
+  HamburgerMenuProps
+> = styled(RxHamburgerMenu)<HamburgerMenuProps>`
   display: none;
 
   @media (max-width: 1020px) {
@@ -190,8 +201,8 @@ const HamburgerMenu = styled(RxHamburgerMenu)<{ isScrolled: boolean }>`
     cursor: pointer;
     text-align: center;
     margin-right: 30px;
-    margin-bottom: ${(props) => (props.isScrolled ? "12px" : "22px")};
-    margin-top: ${(props) => (props.isScrolled ? "28px" : "26px")};
+    margin-bottom: ${(props) => (props.isscrolled ? "12px" : "22px")};
+    margin-top: ${(props) => (props.isscrolled ? "28px" : "26px")};
     color: #3e3e3e;
     font-weight: 200;
     opacity: 1;
@@ -425,7 +436,7 @@ function Header() {
           </ButtonsWrapper>
           <HamburgerMenu
             onClick={handleHamburgerClick}
-            isScrolled={isScrolled}
+            isscrolled={isScrolled ? true : undefined}
           />
         </HeaderNavi>
       )}

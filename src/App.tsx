@@ -17,7 +17,6 @@ function App() {
       <Project />
       <Contact />
       <Modal />
-      <AppRouter />
       <Footer isMobileMenuOpen={false} />
     </Router>
   );
