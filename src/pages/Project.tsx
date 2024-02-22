@@ -54,8 +54,8 @@ const ContentBox = styled(motion.div)<{ shape: string }>`
 `;
 
 const ProjectBox = styled(motion.div)`
-  width: 95%;
-  height: 95%;
+  width: 100%;
+  height: 100%;
   max-width: 400px;
   max-height: 400px;
   cursor: pointer;
@@ -168,7 +168,7 @@ export interface ProjectProps {
   progress: string[];
   gitLink: string;
   gitCode: string;
-  img: string;
+  img: string[];
   text: string;
   tag: string[];
 }

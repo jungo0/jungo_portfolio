@@ -27,6 +27,60 @@ const Overlay = styled(motion.div)`
   z-index: 110;
   background-color: rgba(0, 0, 0, 0.3);
 `;
+const NavButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+`;
+const DotContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: -18px;
+`;
+
+const DotButton = styled.button`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 0 5px;
+  border: none;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #ddd;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &.active {
+    background-color: #436850;
+  }
+`;
+
+const NavigationButton = styled.button`
+  background-color: RGB(249, 246, 240);
+  border: 1px solid rgb(182, 182, 182);
+  padding: 6px 11px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ddd;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+`;
+
 const Tag = styled.div`
   display: flex;
   flex-wrap: nowrap;
@@ -107,7 +161,7 @@ const Contents = styled(motion.div)`
   }
 
   .text {
-    padding-top: 1.875rem;
+    padding-top: 1rem;
     h3 {
       padding-bottom: 9px;
       width: 95%;
@@ -220,17 +274,13 @@ const StyledButton = styled.a`
     `}
   &:nth-child(1) {
     color: white;
-    background: linear-gradient(
-      to right,
-      rgba(148, 168, 226, 1),
-      rgba(147, 183, 226, 1)
-    );
+    background: linear-gradient(to right, rgba(67, 104, 80), rgb(58, 88, 67));
 
     &:hover {
       background: linear-gradient(
         to right,
-        rgba(148, 168, 226, 0.7),
-        rgba(147, 183, 226, 0.7)
+        rgba(67, 104, 80, 0.85),
+        rgb(58, 88, 67, 0.85)
       );
     }
 
@@ -296,6 +346,8 @@ function Modal() {
   const [id, setId] = useRecoilState(ModalText);
   const [DB, setDB] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   const hidden = () => {
     setId("");
     setIsModalOpen(false);
@@ -315,6 +367,10 @@ function Modal() {
       hidden();
     }
   };
+  const handleDotButtonClick = (index: number) => {
+    setCurrentImageIndex(index);
+  };
+
   return (
     <AnimatePresence>
       {id ? (
@@ -346,10 +402,42 @@ function Modal() {
                     </Tag>
                     <div className="image">
                       <img
-                        src={require(`../img/${ele.img}.png`)}
-                        alt={`${ele.img}`}
+                        src={require(`../img/${ele.img[currentImageIndex]}.png`)}
+                        alt={`${ele.img[currentImageIndex]}`}
                       />
                     </div>
+                    <DotContainer>
+                      {ele.img.map((_, index) => (
+                        <DotButton
+                          key={index}
+                          className={
+                            index === currentImageIndex ? "active" : ""
+                          }
+                          onClick={() => handleDotButtonClick(index)}
+                        />
+                      ))}
+                    </DotContainer>
+                    <NavButtonContainer>
+                      <NavigationButton
+                        onClick={() =>
+                          setCurrentImageIndex(
+                            (prevIndex) =>
+                              (prevIndex - 1 + ele.img.length) % ele.img.length
+                          )
+                        }
+                      >
+                        Prev
+                      </NavigationButton>
+                      <NavigationButton
+                        onClick={() =>
+                          setCurrentImageIndex(
+                            (prevIndex) => (prevIndex + 1) % ele.img.length
+                          )
+                        }
+                      >
+                        Next
+                      </NavigationButton>
+                    </NavButtonContainer>
                     <div className="text">
                       <div>
                         <h3>{ele.name}</h3>
