@@ -16,12 +16,29 @@ const StyledInput = styled.input`
   padding-left: 20px;
   width: 100%;
   margin-bottom: 20px;
-  font-family: "GmarketSansTTFLight";
+  font-family: "Pretendard_Regular";
   border: 1.5px solid #bfbfbf;
   box-sizing: border-box;
   text-align: left;
   opacity: 0.8;
+  &.error {
+    border: 1.5px solid #8d8d8d;
+    animation: shake 0.4s ease-in-out;
+  }
 
+  @keyframes shake {
+    0%,
+    80% {
+      transform: translateX(0);
+    }
+    25%,
+    65% {
+      transform: translateX(-5px);
+    }
+    50% {
+      transform: translateX(5px);
+    }
+  }
   &:focus {
     border: 1.5px solid #000;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -30,9 +47,9 @@ const StyledInput = styled.input`
 `;
 const OuterContainer = styled(motion.section)`
   height: auto;
-  font-family: "GmarketSansTTFLight";
+  font-family: "Pretendard_Regular";
   background-color: #f9f6f0;
-  padding: 6rem 9rem 2rem 9rem;
+  padding: 5rem 9rem 6rem 9rem;
   justify-content: center;
   align-items: center;
 `;
@@ -144,6 +161,11 @@ function Etc() {
     name: "",
     message: "",
   });
+  const [, setErrorMessages] = useState({
+    title: "",
+    name: "",
+    message: "",
+  });
   const [showPopup, setShowPopup] = useState(false);
   const [isFormDisplayed, setIsFormDisplayed] = useState(false);
   const [, setIsPreviewMode] = useState(false);
@@ -167,9 +189,35 @@ function Etc() {
   }, []);
 
   const handleButtonClick = () => {
+    if (!form.title || !form.name || !form.message) {
+      setErrorMessages((prevMessages) => {
+        const newMessages = {
+          ...prevMessages,
+          title: form.title ? "" : "제목을 입력해주세요!",
+          name: form.name ? "" : "이름을 입력해주세요!",
+          message: form.message ? "" : "메세지를 입력해주세요!",
+        };
+        return newMessages;
+      });
+
+      Object.keys(form).forEach((key) => {
+        const inputValue = form[key as keyof typeof form];
+        const inputElement = document.getElementById(key) as HTMLInputElement;
+
+        if (!inputValue && inputElement) {
+          inputElement.classList.add("error");
+          inputElement.placeholder = "텍스트를 입력해주세요!";
+        } else if (inputElement) {
+          inputElement.classList.remove("error");
+        }
+      });
+
+      return;
+    }
+
     setDisplayedForm(form);
     setIsFormDisplayed(true);
-    setIsPreviewMode(true); //프리뷰 모드
+    setIsPreviewMode(true);
   };
 
   const handleCancelPopup = () => {
@@ -198,9 +246,7 @@ function Etc() {
       await emailjs.send(serviceId, templateId, formData, "PjwXtcr2XWrRUHAIo");
 
       setShowPopup(true);
-    } catch (error) {
-      console.error("Error sending email:", error);
-    }
+    } catch (error) {}
   };
 
   const handleSubmit = async (e: {
@@ -222,9 +268,7 @@ function Etc() {
       );
 
       setShowPopup(true);
-    } catch (error) {
-      console.error("Error sending email:", error);
-    }
+    } catch (error) {}
   };
 
   const handleChange = (
@@ -235,7 +279,15 @@ function Etc() {
       ...prevForm,
       [name]: value,
     }));
+
+    setErrorMessages((prevMessages) => ({
+      ...prevMessages,
+      [name]: "",
+    }));
+
+    document.getElementById(name)?.classList.remove("error");
   };
+
   return (
     <OuterContainer>
       <TitleForm titleName="Contact" />
@@ -280,14 +332,15 @@ function Etc() {
               alignItems: "center",
             }}
           >
-            Thank you :) <br />
-            (~~해서 Gmail로 ~~한 내용들이 입력됩니다)
+            Thank you
+            <br />
+            입력한 정보(제목, 이름, 메세지)들이 <br /> Gmail로 전송됩니다!
           </div>
           <img
             src={background}
             alt="Profile"
             style={{
-              padding: " 40px 70px",
+              padding: " 30px 70px",
               height: "70%",
               width: "100%",
               boxSizing: "border-box",
@@ -312,7 +365,7 @@ function Etc() {
               >
                 아래와 같이 메일이 전송됩니다!
               </span>
-              <p style={{ fontFamily: "GmarketSansTTFMedium" }}>제목 </p>
+              <p style={{ fontFamily: "Pretendard_Regular" }}>제목 </p>
               <p
                 style={{
                   border: "1px solid #D0D5DD",
@@ -325,7 +378,7 @@ function Etc() {
                 {" "}
                 {displayedForm.title}
               </p>
-              <p style={{ fontFamily: "GmarketSansTTFMedium" }}>이름 </p>
+              <p style={{ fontFamily: "Pretendard_Regular" }}>이름 </p>
               <p
                 style={{
                   border: "1px solid #D0D5DD",
@@ -338,7 +391,7 @@ function Etc() {
                 {" "}
                 {displayedForm.name}
               </p>{" "}
-              <p style={{ fontFamily: "GmarketSansTTFMedium" }}>메세지</p>
+              <p style={{ fontFamily: "Pretendard_Regular" }}>메세지</p>
               <p
                 style={{
                   border: "1px solid #D0D5DD",
@@ -423,6 +476,7 @@ function Etc() {
               <StyledInput
                 type="text"
                 name="title"
+                id="title"
                 value={form.title}
                 onChange={handleChange}
                 onFocus={handleFocus}
@@ -433,6 +487,7 @@ function Etc() {
                 type="text"
                 name="name"
                 value={form.name}
+                id="name"
                 onChange={handleChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
@@ -440,6 +495,7 @@ function Etc() {
               />
               <StyledInput
                 name="message"
+                id="message"
                 value={form.message}
                 onChange={handleChange}
                 onFocus={handleFocus}

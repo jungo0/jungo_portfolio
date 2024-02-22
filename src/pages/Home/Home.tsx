@@ -279,8 +279,8 @@ function Home() {
               textAlign: "left",
               marginBottom: "7rem",
               maxWidth: "420px",
-              fontFamily: "Pretendard_Regular",
-              lineHeight: "1.34",
+              fontFamily: "Pretendard_Medium",
+              lineHeight: "1.3",
               opacity: "0.6",
               color: "#3C3633",
             }}

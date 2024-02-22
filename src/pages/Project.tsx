@@ -28,10 +28,6 @@ const Container = styled(motion.section)`
   @media (max-width: 768px) {
     padding: 0;
   }
-
-  @media (max-width: 1200px) {
-    padding: 4rem;
-  }
 `;
 const ContentBox = styled(motion.div)<{ shape: string }>`
   display: grid;
@@ -58,13 +54,12 @@ const ContentBox = styled(motion.div)<{ shape: string }>`
 `;
 
 const ProjectBox = styled(motion.div)`
-  width: 80%;
-  height: 80%;
+  width: 95%;
+  height: 95%;
   max-width: 400px;
   max-height: 400px;
   cursor: pointer;
   margin: 1rem;
-  border-radius: 12px;
   border: 2px solid #1c1917;
   overflow: hidden;
   position: relative;
@@ -89,20 +84,23 @@ const ProjectBox = styled(motion.div)`
     color: #fff;
     position: absolute;
     bottom: 0;
-    border-radius: 50%;
     text-transform: capitalize;
-    top: 50%;
-    left: 50%;
     margin-top: 5px;
     height: 0;
     line-height: 1;
     padding-left: 20px;
-    color: ${(props) => props.theme.bgColor};
-    font-size: 1rem;
+    font-size: 1.2rem;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: 0.5s;
+    transition: opacity 0.4s;
     opacity: 0;
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+
+    @media (max-width: 1200px) {
+      font-size: 1rem;
+    }
   }
 
   .clickText {
@@ -117,6 +115,13 @@ const ProjectBox = styled(motion.div)`
     transform: translateX(-50%);
     opacity: 0;
     transition: opacity 0.5s;
+    @media (max-width: 768px) {
+      font-size: 1rem;
+    }
+
+    @media (max-width: 1200px) {
+      font-size: 1rem;
+    }
   }
 
   &:hover::before {
@@ -139,7 +144,6 @@ const ProjectBox = styled(motion.div)`
     height: 80%;
     border: 2px solid #fff;
     padding: 10px;
-    border-radius: 8px;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -159,6 +163,7 @@ export interface ProjectProps {
   name: string;
   state: string;
   skill: string[];
+  imgTh: string;
   part: string[];
   progress: string[];
   gitLink: string;
@@ -207,8 +212,8 @@ function Project() {
             >
               <img
                 className="imgBox"
-                src={require(`../img/${element.img}.png`)}
-                alt={`${element.img}`}
+                src={require(`../img/${element.imgTh}.jpeg`)}
+                alt={`${element.imgTh}`}
               />
               <h3 className="title">{element.name}</h3>
               <div className="clickText">Click!</div>

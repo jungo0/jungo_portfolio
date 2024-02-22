@@ -6,7 +6,7 @@ import styled, {
   keyframes,
   StyledComponent,
 } from "styled-components";
-import { FaGithub } from "react-icons/fa6";
+import { FaGithub } from "react-icons/fa";
 import { SiVelog } from "react-icons/si";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { FaArrowCircleRight } from "react-icons/fa";
@@ -221,7 +221,7 @@ const HamburgerMenu: StyledComponent<
 const CloseButton = styled.button`
   position: absolute;
   top: 15px;
-  right: 36px;
+  right: 33px;
   font-size: 50px;
   color: #fff;
   background-color: transparent;
@@ -417,14 +417,25 @@ function Header() {
               </li>
             </ul>
           </Menu>
+
           <ButtonsWrapper isScrolled={isScrolled} isMobile={isMobile}>
             <Buttons isScrolled={isScrolled}>
               <ButtonsContainer>
-                <Button onClick={() => navigate("/git")}>
+                <Button
+                  as="a"
+                  href="https://github.com/jungo0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <FaGithub />
                 </Button>
 
-                <Button onClick={() => navigate("/blog")}>
+                <Button
+                  as="a"
+                  href="https://velog.io/@jungo_0/posts"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <SiVelog />
                 </Button>
               </ButtonsContainer>

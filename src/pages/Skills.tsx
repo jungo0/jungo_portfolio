@@ -136,7 +136,6 @@ const Sidebar = styled.aside`
     bottom:-6%;
   `}
 `;
-
 const ContentContainer = styled.section`
   flex: 1;
   box-sizing: border-box;
@@ -144,7 +143,6 @@ const ContentContainer = styled.section`
   max-width: 1480px;
   display: flex;
   padding-top: 80px;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
   color: #333;
@@ -152,14 +150,36 @@ const ContentContainer = styled.section`
   position: relative;
   box-sizing: border-box;
   padding-left: 6%;
-
   ${media.mobile`
+    padding: 10px;
+  `}
+
+  &::before {
+    content: "";
+    flex: auto;
+  }
+
+  &::after {
+    content: "";
+    flex: auto;
+  }
+`;
+
+const ListItemWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 1480px;
+
+  ${media.tablet`
     padding: 10px;
   `}
 `;
 
 const ListItem = styled.div`
   width: calc(50% - 20px);
+  margin-bottom: 50px;
+  margin-right: 50px;
   position: relative;
   display: flex;
   flex-direction: row-reverse;
@@ -168,16 +188,21 @@ const ListItem = styled.div`
   min-width: 230px;
   color: rgba(1, 1, 1, 0.7);
   font-family: "Pretendard_Regular";
-  margin: 20px 10px 0;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 12px;
 
-  ${media.tablet`
-    width: calc(50% - 10px);
-    max-width: 100%;
-  `}
+  @media (max-width: 1550px) {
+    font-size: 0.5rem;
+    width: 400px;
+    height: 130px;
+  }
+  @media (max-width: 1300px) {
+    font-size: 0.5rem;
+    width: 300px;
+    height: 100px;
+  }
 
   ${media.mobile`
     width: calc(70% - 20px);
@@ -205,7 +230,9 @@ const SubTitle = styled.h3`
   width: fit-content;
   padding: 2.5px 9px;
   border-radius: 15px;
-
+  @media (max-width: 1550px) {
+    font-size: 0.7rem;
+  }
   @media (max-width: 1220px) {
     font-size: 0.7rem;
   }
@@ -222,7 +249,9 @@ const SubTitle = styled.h3`
 const Title = styled.h2`
   margin-top: 8px;
   font-size: 0.9rem;
-
+  @media (max-width: 1550px) {
+    font-size: 0.7rem;
+  }
   @media (max-width: 1220px) {
     font-size: 0.7rem;
   }
@@ -254,14 +283,9 @@ const Gauge = styled.div<{ percentage: number }>`
     animation: ${({ percentage }) => gaugeAnimation(percentage)} 1s ease-in-out;
   }
 
-  @media (max-width: 1220px) {
-    width: 100%;
-    height: 9px;
-  }
-
   ${media.tablet`
     width: 100%;
-    height: 7px;
+    height: 9px;
   `}
 
   ${media.mobile`
@@ -272,8 +296,8 @@ const Gauge = styled.div<{ percentage: number }>`
 
 const PaginationContainer = styled.div`
   position: absolute;
-  bottom: -7%;
-  right: 3%;
+  bottom: 12%;
+  right: 2%;
   justify-content: flex-end;
 
   ${media.tablet`
@@ -323,7 +347,7 @@ const RightArrow = styled.button`
   }
 `;
 
-function Skills() {
+const Skills = () => {
   const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<
@@ -331,6 +355,7 @@ function Skills() {
   >(categories[0]);
   const [, setCurrentPercentage] = useState(0);
   const [key, setKey] = useState(0);
+
   const totalItems =
     selectedCategory === "Basic"
       ? Object.keys(basicSkills).length
@@ -369,10 +394,13 @@ function Skills() {
     }
   }, [selectedCategory]);
 
+  const totalSkills = Object.keys(getCategorySkills()).length;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, totalSkills);
   const paginatedData = Array.from(
-    { length: totalItems },
-    (_, index) => index + 1
-  ).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    { length: endIndex - startIndex },
+    (_, index) => startIndex + index + 1
+  );
 
   useEffect(() => {
     setCurrentPercentage(0);
@@ -415,32 +443,37 @@ function Skills() {
             </ul>
           </Sidebar>
           <ContentContainer>
-            {paginatedData.map((item) => (
-              <ListItem key={item}>
-                <TextContainer>
-                  <SubTitle>
-                    {
-                      getCategorySkills()[`${selectedCategory}${item}`]
-                        ?.subtitle
-                    }{" "}
-                  </SubTitle>
-                  <Gauge
-                    key={key}
-                    percentage={
-                      getCategorySkills()[`${selectedCategory}${item}`]
-                        ?.percentage || 0
+            {" "}
+            <ListItemWrapper>
+              {paginatedData.map((item) => (
+                <ListItem key={item}>
+                  <TextContainer>
+                    <SubTitle>
+                      {
+                        getCategorySkills()[`${selectedCategory}${item}`]
+                          ?.subtitle
+                      }{" "}
+                    </SubTitle>
+                    <Gauge
+                      key={key}
+                      percentage={
+                        getCategorySkills()[`${selectedCategory}${item}`]
+                          ?.percentage || 0
+                      }
+                    />
+                    <Title>
+                      {getCategorySkills()[`${selectedCategory}${item}`]?.title}{" "}
+                    </Title>
+                  </TextContainer>
+                  <Image
+                    src={
+                      getCategorySkills()[`${selectedCategory}${item}`]?.image
                     }
+                    alt={`${selectedCategory} Image ${item}`}
                   />
-                  <Title>
-                    {getCategorySkills()[`${selectedCategory}${item}`]?.title}{" "}
-                  </Title>
-                </TextContainer>
-                <Image
-                  src={getCategorySkills()[`${selectedCategory}${item}`]?.image}
-                  alt={`${selectedCategory} Image ${item}`}
-                />
-              </ListItem>
-            ))}
+                </ListItem>
+              ))}
+            </ListItemWrapper>
             <PaginationContainer>
               <LeftArrow onClick={handlePrevPage}> ˂</LeftArrow>
               {Array.from({ length: totalPages }, (_, index) => index + 1).map(
@@ -467,6 +500,6 @@ function Skills() {
       </Wrapper>
     </>
   );
-}
+};
 
 export default Skills;

@@ -35,6 +35,7 @@ export const addProject = async (projectData: {
   gitCode: string;
   gitLink: string;
   img: string;
+  imgTh: string;
   skill: string[];
   text: string;
   part: string[];

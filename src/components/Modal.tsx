@@ -310,13 +310,17 @@ function Modal() {
       setDB(context);
     });
   }, []);
-
+  const handleOverlayClick = (event: { target: any; currentTarget: any }) => {
+    if (event.target === event.currentTarget) {
+      hidden();
+    }
+  };
   return (
     <AnimatePresence>
       {id ? (
         <>
           {" "}
-          <Overlay>
+          <Overlay onClick={handleOverlayClick}>
             <Container
               variants={modalBackGround}
               initial={isModalOpen ? "start" : "init"}
