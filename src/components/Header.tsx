@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
+import { Link, useLocation } from "react-router-dom";
 import styled, {
   css,
   DefaultTheme,
@@ -298,7 +298,6 @@ const ArrowIcon = styled(FaArrowCircleRight)`
 
 function Header() {
   const location = useLocation().pathname;
-  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1020);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
