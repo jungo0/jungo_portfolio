@@ -15,7 +15,7 @@ import arrow from "../img/arrow.png";
 const Container = styled(motion.section)`
   height: auto;
   background-color: #f9f6f0;
-  padding: 6rem 9rem 4rem 9rem;
+  padding: 6rem 7rem 4rem 6rem;
   .button {
     text-align: right;
     button {
@@ -32,7 +32,7 @@ const Container = styled(motion.section)`
 const ContentBox = styled(motion.div)<{ shape: string }>`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  max-width: 1500px;
+  max-width: 1600px;
   margin: 0 auto;
 
   ${(props) =>
@@ -59,7 +59,7 @@ const ProjectBox = styled(motion.div)`
   max-width: 400px;
   max-height: 400px;
   cursor: pointer;
-  margin: 1rem;
+  margin: 0.5rem 0.2rem;
   border: 2px solid #1c1917;
   overflow: hidden;
   position: relative;

@@ -12,6 +12,8 @@ import { BiSolidCategoryAlt } from "react-icons/bi";
 import { FaTools } from "react-icons/fa";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaRegCheckCircle } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa6";
+import { FaChevronLeft } from "react-icons/fa6";
 import media from "../styles/media";
 interface ButtonProps {
   icon: React.ReactNode;
@@ -26,19 +28,17 @@ const Overlay = styled(motion.div)`
   left: 0;
   z-index: 110;
   background-color: rgba(0, 0, 0, 0.3);
+  transition: opacity 0.2s ease;
 `;
-const NavButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-  padding-left: 5px;
-  padding-right: 5px;
-`;
+
 const DotContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-top: -18px;
+
+  ${media.mobile`
+    margin-bottom: 20px;
+  `}
 `;
 
 const DotButton = styled.button`
@@ -61,23 +61,6 @@ const DotButton = styled.button`
 
   &.active {
     background-color: #436850;
-  }
-`;
-
-const NavigationButton = styled.button`
-  background-color: RGB(249, 246, 240);
-  border: 1px solid rgb(182, 182, 182);
-  padding: 6px 11px;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #ddd;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
   }
 `;
 
@@ -119,7 +102,7 @@ const Container = styled(motion.div)`
   max-width: 770px;
   min-width: 625px;
   min-height: 780px;
-
+  transition: opacity 0.1s ease;
   background-color: white;
   border-radius: 15px;
   left: 50%;
@@ -141,17 +124,23 @@ const Contents = styled(motion.div)`
     0 10px 20px rgba(255, 255, 255, 0.06);
   display: flex;
   flex-direction: column;
+  @media (max-width: 768px) {
+    overflow-y: auto;
+    height: 100%;
+    max-height: 90vh;
+    position: relative;
+  }
   .image {
     object-fit: cover;
     img {
       border-radius: 15px;
       width: 100%;
-      height: 270px;
+      height: 320px;
       display: block;
       margin: 0 auto;
 
       ${media.mobile`
-      display:none;
+      width: 100%;      height: 250px;
     `}
     }
   }
@@ -400,44 +389,53 @@ function Modal() {
                         </div>
                       ))}
                     </Tag>
-                    <div className="image">
-                      <img
-                        src={require(`../img/${ele.img[currentImageIndex]}.png`)}
-                        alt={`${ele.img[currentImageIndex]}`}
-                      />
-                    </div>
-                    <DotContainer>
-                      {ele.img.map((_, index) => (
-                        <DotButton
-                          key={index}
-                          className={
-                            index === currentImageIndex ? "active" : ""
-                          }
-                          onClick={() => handleDotButtonClick(index)}
-                        />
-                      ))}
-                    </DotContainer>
-                    <NavButtonContainer>
-                      <NavigationButton
+                    <div className="image" style={{ position: "relative" }}>
+                      <FaChevronLeft
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          left: "-5%",
+                          transform: "translate(-50%, -50%)",
+                          cursor: "pointer",
+                        }}
                         onClick={() =>
                           setCurrentImageIndex(
                             (prevIndex) =>
                               (prevIndex - 1 + ele.img.length) % ele.img.length
                           )
                         }
-                      >
-                        Prev
-                      </NavigationButton>
-                      <NavigationButton
+                      />
+                      <img
+                        src={require(`../img/${ele.img[currentImageIndex]}.png`)}
+                        alt={`${ele.img[currentImageIndex]}`}
+                      />{" "}
+                      <DotContainer>
+                        {ele.img.map((_, index) => (
+                          <DotButton
+                            key={index}
+                            className={
+                              index === currentImageIndex ? "active" : ""
+                            }
+                            onClick={() => handleDotButtonClick(index)}
+                          />
+                        ))}
+                      </DotContainer>
+                      <FaChevronRight
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          right: "-5%",
+                          transform: "translate(50%, -50%)",
+                          cursor: "pointer",
+                        }}
                         onClick={() =>
                           setCurrentImageIndex(
                             (prevIndex) => (prevIndex + 1) % ele.img.length
                           )
                         }
-                      >
-                        Next
-                      </NavigationButton>
-                    </NavButtonContainer>
+                      />
+                    </div>
+
                     <div className="text">
                       <div>
                         <h3>{ele.name}</h3>

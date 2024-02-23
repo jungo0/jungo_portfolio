@@ -200,8 +200,8 @@ const ListItem = styled.div`
   }
   @media (max-width: 1300px) {
     font-size: 0.5rem;
-    width: 300px;
-    height: 100px;
+    width: 340px;
+    height: 120px;
   }
 
   ${media.mobile`
