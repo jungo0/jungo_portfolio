@@ -152,7 +152,7 @@ const Contents = styled(motion.div)`
   .text {
     padding-top: 1rem;
     h3 {
-      padding-bottom: 9px;
+      padding-bottom: 4px;
       width: 95%;
       border-bottom: 2px solid rgba(0, 0, 0, 0.4);
       font-size: 1.85rem;
@@ -165,9 +165,9 @@ const Contents = styled(motion.div)`
     `}
 
     .subtitle {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-style: bold;
-      margin-top: 28px;
+      margin-top: 7px;
       padding-bottom: 10px;
     }
     ${media.mobile`
@@ -177,7 +177,7 @@ const Contents = styled(motion.div)`
     `}
     .description {
       color: rgb(1, 1, 1, 0.7);
-      line-height: 1.6rem;
+      line-height: 1.1rem;
       padding-left: 1rem;
     }
     ${media.mobile`
@@ -189,11 +189,11 @@ const Contents = styled(motion.div)`
       width: 70%;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(70px, 3fr));
-      gap: 11px 20px;
+      gap: 12px 20px;
       li {
         color: #14532d;
         background-color: #f0fdf4;
-        padding: 0.5em 0.7em 0.5em 0.6em;
+        padding: 0.5em 0.3em 0.5em 0.3em;
         width: fit-content;
         font-size: 0.8rem;
         border: 1px solid;
@@ -204,7 +204,7 @@ const Contents = styled(motion.div)`
     }
     ${media.mobile`
         padding: 0.3em 0.5em 0.3em 0.4em;
-     font-size: 0.12rem;
+     font-size: 0.1rem;
     `}
     a {
       margin-top: 0.938rem;

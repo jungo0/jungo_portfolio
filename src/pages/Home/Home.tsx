@@ -110,13 +110,13 @@ const Column = styled.div`
 `;
 
 const Image = styled.img`
-  width: 400px;
+  width: 380px;
   height: 450px;
   border-radius: 15px;
   margin-top: 60px;
 
   @media (max-width: 1500px) {
-    width: 320px;
+    width: 300px;
     height: 370px;
   }
 

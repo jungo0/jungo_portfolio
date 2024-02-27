@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import TitleForm from "../components/project/Title";
-import background from "../img/profile.jpg";
+import background from "../img/profile2.png";
 import { IoMdMail } from "react-icons/io";
 import { useEffect } from "react";
 import React, { useState } from "react";
@@ -341,8 +341,8 @@ function Etc() {
             alt="Profile"
             style={{
               padding: " 30px 70px",
-              height: "70%",
-              width: "100%",
+              height: "80%",
+              width: "94%",
               boxSizing: "border-box",
             }}
           />
